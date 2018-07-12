@@ -1,0 +1,131 @@
+﻿@using Kendo.Mvc.UI;
+@using Microsoft.AspNetCore.Identity
+@using TMWork.ViewModels
+@using TMWork.Data.Models.User
+@using TMWork.Services
+@inject SignInManager<AuthUser> SignInManager
+@inject UserManager<AuthUser> UserManager
+@inject TMWork.Services.GlobalService dateFormat
+@{
+    ViewData["Title"] = "Home";
+}
+<div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/images/carousel-appliance_1.jpg" alt="carousel-appliance_1" class="img-responsive" />
+                <div class="carousel-caption" role="option">
+                    <p>
+                        Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
+                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/images/carousel-appliance_2.jpg" alt="carousel-appliance_2" class="img-responsive" />
+                <div class="carousel-caption" role="option">
+                    <p>
+                        Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
+                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/images/carousel-appliance_3.jpg" alt="carousel-appliance_3" class="img-responsive" />
+                <div class="carousel-caption" role="option">
+                    <p>
+                        Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
+                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/images/carousel-appliance_4.jpg" alt="carousel-appliance_4" class="img-responsive" />
+                <div class="carousel-caption" role="option">
+                    <p>
+                        Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
+                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<hr />
+
+@if (ViewBag.ShowCoupons == "yes")
+{
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Coupons - Only one coupon at a time :)
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole(RoleName.CanManageSite))
+            {
+                <span class="panel-title pull-right"><a href="@Url.Action("couponIndex", "customercoupon", new { area = "admin" })">Edit</a></span>
+            }
+        </h3>
+        <div class="row col-sm-offset-1 ">
+            <center>
+                <script type="text/x-kendo-tmpl" id="couponListViewTemplate">
+                    <div class="col-sm-5" style="padding-top:1em; ">
+                        <a class="thumbnail" style="background-color:lightgoldenrodyellow;" href="@Url.Action("contact", "home", new { area = "" })">
+                            <h3 class="group inner list-group-item-heading">
+                                ${Name}
+                            </h3>
+                            <div class="caption">
+                                <p class="group inner list-group-item-text">
+                                    ${Description}
+                                </p>
+                                <p class="group inner list-group-item-text">
+                                    Expired on: #=kendo.toString(kendo.parseDate(ExpirationDate), 'MM/dd/yyyy')#
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </script>
+            </center>
+        </div>
+    </div>
+
+    <div class="demo-section k-content wide">
+        @(Html.Kendo().ListView<TMWork.Data.Models.Customer.CustomerCoupon>()
+                                .Name("couponListView")
+                                .TagName("div")
+                                .ClientTemplateId("couponListViewTemplate")
+                                .DataSource(dataSource => dataSource
+                                   .Ajax().
+                                   Read(read => read.Action("GetCustomerCoupons", "Home")
+                                )
+                                .ServerOperation(true)
+                                .PageSize(20)
+                               )
+        )
+    </div>
+}
+<hr />
+<style>
+    .k-pager-wrap {
+        border-top: 0;
+    }
+
+    .demo-section .k-listview:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+</style>

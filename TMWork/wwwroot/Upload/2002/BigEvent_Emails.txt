@@ -1,0 +1,2281 @@
+Using System
+Using System.Web
+Using System.Web.UI.WebControls
+Using System.Data
+Using System.Text.RegularExpressions
+DclNameSpace com.vf.STRAP.Classes
+BegClass SkuDB Access( *Public )
+
+	DclDB pgmDB DBName( "*Public/APAS400_2005" ) Access(*Public)
+	
+	DclDiskFile  StrapProj       +
+          Type( *Update  )       + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBLPROJZ") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          ChkFmtId(*No)  
+
+	DclDiskFile  CBFCUST         +
+          Type( *Input )         + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBFCUST") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          ChkFmtId(*No)  
+
+	DclDiskFile  CBWCUST         +
+          Type( *Input )         + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBWCUST") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          RnmFmt(CUST:wCUST)     +          
+          ChkFmtId(*No)  
+          	
+	DclDiskFile  StrapSku        +
+          Type( *Update  )       + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBFSKUS") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          AddRec( *Yes )         + 
+          ChkFmtId(*No)  
+          
+   DclDiskFile SKUFile           +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBLSKUMA") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)          
+
+   DclDiskFile SKUFileB          +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBLSKUMB") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          RnmFmt(CBRSKUM:SKUMB)  +
+          ChkFmtId(*No)          
+          
+    DclDiskFile StrapLoc         +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBLLOCMD") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)      
+   
+    DclDiskFile StrapLocC        +
+          Type(*Update)          +
+          Org(*Indexed)          +
+          File("*LIBL/CBLLOCMC") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          PreFix(C)              +
+          RnmFmt(LOCM:LOCMC)     +
+          AddRec( *Yes )         +
+          ChkFmtId(*No)      
+          
+    DclDiskFile StrapApproval    +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBLAPPRB") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)            
+          
+    DclDiskFile StrapApprovalC   +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBLAPPRC") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          RnmFmt(APPRC)          +
+          ChkFmtId(*No)                
+          
+    DclDiskFile BaseProductM     +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/INLBASMA") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)      
+             
+          
+     DclDiskFile LabelMaster     +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/INLLBGMA") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)        
+     
+     DclDiskFile Exception       +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CSLXCPT5") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)  
+          
+     DclDiskFile FinishedGoods   +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/INLFGSMB") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)           
+     
+     DclDiskFile ServiceMgr      +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/CBFSRVM")  +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No) 
+          
+     DclDiskFile SecurityHdr     +
+          Type(*Input)           +
+          Org(*Indexed)          +
+          File("*LIBL/SYLSECHA") +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          ChkFmtId(*No) 
+          
+     DclDiskFile PCFEMAL         +
+          Type(*Input)           +
+          File("*LIBL/PCFEMAL")  +
+          DB(pgmDB)              +
+          ImpOpen(*No)           +
+          AddRec(*Yes)           +
+          ChkFmtId(*No)           
+          
+	DclDiskFile  NotesFile       +
+          Type(*Input)           + 
+          Org(*Indexed)          + 
+          File("*Libl/CBFNOTE")  +
+          DB(pgmDB)              +
+          ImpOpen(*No)		     +
+          ChkFmtId(*No)
+          
+	DclDiskFile ProdMasterA      +
+          Type(*Input)           + 
+          Org(*Indexed)          + 
+          File("*Libl/CBLPRDMA") +
+          DB(pgmDB)              +
+          RnmFmt(CBDMD:PRDMA)    +
+          ImpOpen(*No)           +
+          ChkFmtId(*No)       
+     
+     DclDiskFile  XFERSTOP       +
+          Type( *Input  )        + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBFSTOP") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          ChkFmtId(*No)  
+          
+     DclDiskFile  NewEmails      +
+          Type( *Input  )        + 
+          Org( *Indexed )        + 
+          File( "*Libl/CBFNEML") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          ChkFmtId(*No)      
+          
+      DclDiskFile  Locations      +
+          Type( *Input  )        + 
+          Org( *Indexed )        + 
+          File( "*Libl/SYLLOCNA") +
+          DB( pgmDB )            +
+          ImpOpen( *No )         +
+          ChkFmtId(*No)   
+
+	
+/region Declare Keys and Fields             
+	DclKList	KyProj
+	   DclKfld	KeyProject#
+	   DclKfld	Keyseq#
+	   
+	DclKList	KyProdLbl
+	   DclKfld	KeyProduct
+	   DclKfld	KeyLabel
+	   
+	DclKList	KyLocnProd
+	   DclKfld	KeyLocn
+	   DclKfld	KeyProduct   
+	   
+	DclKList	KyProjNWPRDLB
+	   DclKfld	KeyProject#
+	   DclKfld	Keyseq#
+	   DclKFld  KeyNWPRDLB
+	   
+	DclKList	KyApproval
+	   DclKfld	KeyUserID
+	   DclKfld	KeyCategory
+	   
+	DclKList	KyCategRgn
+	   DclKfld	KeyCategory
+	   DclKfld	KeyRegion  
+	   
+	DclKList	KyExcptLocn
+	   DclKfld	KeyExcpt
+	   DclKfld	KeyLocn
+	   
+	DclKList	KyLablProdLoc
+	   DclKfld	KeyLabel
+	   DclKfld	KeyProduct
+	   DclKfld  KeyLocn   
+	        
+	DclKList	KyProjType
+	   DclKfld	KeyProject#
+	   DclKfld	Keyseq#
+	   DclKfld  KeyType		
+	   
+	DclKList	KyStop
+	   DclKfld	LM_MFGLOC
+	   DclKfld	LM_LOCATN
+	     
+    DclFld	Keyseq#		   Type( *zoned )	Len( 2,0 )
+	DclFld	KeyProject#	   Type( *zoned )	Len( 5,0 )
+	DclFld  KeyCategory    Type(*Char)       Len(2)
+	DclFld  KeyRegion      Like(PJ_REGION)
+	DclFld	KeyUserID      Like(AP_USERID)
+	DclFld	KeyLocn		   Like(PJ_LOCN) 
+	DclFld	KeyProduct     Like(SK_BASPRD)
+	DclFld  KeyLabel       Like(SK_LABEL)
+	DclFld  KeyNWPRDLB     Like(SK_NWPRDLB)
+	DclFld  KeyExcpt       Like(EXTYPE) Inz("SLSCOORD")
+	DclFld  KeySrvMgr      Like(SYHUSR) 
+	DclFld  KeyType	       Type(*Char)		Len(1)
+	DclFld  LabelProjectID Type(*String)	
+	DclFld KyStrapEmail	   Like(EXTYPE)
+	  
+ 	
+/endregion
+
+
+ BegFunc getDS Access( *Public ) Type( System.Data.DataSet )
+      DclSrParm SummaryFormParm Type(*String)
+         
+        DclFld _dsSKU          Type(System.Data.DataSet) New()
+	    DclFld dt              Type(DataTable) New("SKU")
+	    DclFld dt_Column       Type(DataColumn)
+	    DclFld dt_Row          Type(DataRow)
+	    DclFld w0NEWPRD        Like(LM_NEWPRD)
+	    DclFld w0NEWPRDDSC     Type(*String)
+	    DclFld w0NEWLBLDSC     Type(*String)
+	    DclFld w0NEWLBL        Like(LM_NEWLBL)
+	    DclFld w0NWPRDLB       Like(LM_NWPRDLB)
+	    DclArray ArrayNWPRDLB  Type(*char) Len(9) Dim(100)
+	    DclFld w0Found         Type(*boolean)
+	    DclFld idx             Type(*Integer4)
+	    DclFld w0NP            Type(*Boolean)
+	    DclFld w0ProdFound     Type(*Boolean)
+	    DclFld isFinalApprover Type(*Boolean)
+	    DclFld ua              Type( UserApprover )
+	    DclFld productFound    Type(*Boolean) Inz(*False)
+	    
+	    
+		    	    
+/region prepare dataset 
+        
+             
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="NewProduct"
+	    dt_Column.ReadOnly=*True
+	    
+	    dt.Columns.Add(dt_Column)    
+	                 
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="NewProductToolTip"
+	    dt_Column.ReadOnly=*True
+	    
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="NewProductDesc"
+	    dt_Column.ReadOnly=*True
+	    
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="NewLabelDesc"
+	    dt_Column.ReadOnly=*True
+	    
+	    dt.Columns.Add(dt_Column)
+     
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="Product"
+	    dt_Column.ReadOnly=*True
+	    
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="Label"
+	    dt_Column.ReadOnly=*True
+	       
+	    dt.Columns.Add(dt_Column) 
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="Description"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="UPC14"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)	    
+	    	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="UPC12"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="Group"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="Reference"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.Boolean")
+	    dt_Column.ColumnName="PrdEnable"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.Boolean")
+	    dt_Column.ColumnName="LblEnable"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+	    dt_Column = *New DataColumn()
+	    dt_Column.DataType=System.Type.GetType("System.String")
+	    dt_Column.ColumnName="LM_NWPRDLB"
+	    dt_Column.ReadOnly=*true
+	       
+	    dt.Columns.Add(dt_Column)
+	    
+/endregion
+       
+		w0NEWPRD    = *Blanks
+		w0NEWPRDDSC = *Blanks 
+		w0NEWLBLDSC = *Blanks
+		
+		ua = *New UserApprover() 
+        ua.pgmDB = *this.pgmDB
+       
+        //If *this.firstTime()
+        //If *this.showSKUInfo() <> *blanks
+			Open StrapProj
+			Open StrapLoc
+            
+			Chain StrapProj Key(KyProj)  Access(*Nolock)
+			If StrapProj.IsFound()
+				KeyCategory = PJ_Categ
+			Else
+				KeyCategory = *blanks
+				PJ_BASPRD = *zeros
+			Endif
+			
+			isFinalApprover = ua.isFinalApprover(LabelProjectID, PJ_CATEG)
+            
+            If KeyCategory = "NS"
+            
+               dt_Row = dt.NewRow()
+               *this.ReadSkuFile(PJ_BASPRD.toString().Trim(), PJ_LABEL.toString().Trim())
+               *this.ReadLabel(PJ_LABEL.toString().Trim())
+               dt_Row("Product")           = String.Format("{0}", PJ_BASPRD.toString().TRIM()) 
+			   dt_Row("Label")             = String.Format("{0}", PJ_LABEL.toString().TRIM()) 
+			   dt_Row("Description")       = String.Format("{0}", *this.getDesc())	
+               dt_Row("UPC14")             = String.Format("{0}", *this.getUPC14()) 
+			   dt_Row("UPC12")             = String.Format("{0}", *this.getUPC12())
+			   dt_Row("Group")             = String.Format("{0}", *this.getGroup())
+			   dt_Row("Reference")         = String.Format("{0}", *this.getReference())
+               dt_Row("PrdEnable")      = *false 
+			   dt_Row("LblEnable")      = *false 
+			   dt.Rows.Add(dt_Row)
+			   
+            Else   
+               
+			// load New Product/New Label info for update 
+			Setll StrapLoc Key(KyProj)
+			ReadE StrapLoc Key(KyProj)
+			DoWhile Not StrapLoc.IsEOF 
+                                
+				Clear w0NEWPRD
+				Clear w0NEWLBL
+				Select
+				When KeyCategory = "FT" //New Formula
+					If LM_NEWPRD   = *Blanks
+						w0NEWPRD    = LM_NWPRDLB.toString().Substring(0,5)
+						w0NEWPRDDSC = *this.getPrdDesc(w0NEWPRD, PJ_LOCN.toString()) 
+					EndIF
+					If LM_NEWLBL = *Blanks
+						If LM_NWPRDLB.toString().IndexOf("NEW") >= *Zeros
+							w0NEWLBL    = LM_NWPRDLB.toString().Substring(4,3)
+							w0NEWLBLDSC = LM_NEWLBL.toString().Trim()
+						Else
+							w0NEWLBL    = LM_NWPRDLB.toString().Substring(5,3)
+							w0NEWLBLDSC = *this.ReadLabel(w0NEWLBL)
+						EndIf
+					EndIF 
+					 
+					If w0NEWPRD = *Blanks and w0NEWLBL = *Blanks and LM_NWPRDLB <> *Blanks
+					   w0NEWPRD    = LM_NWPRDLB.toString().Substring(0,5)
+				       w0NEWPRDDSC = *this.getPrdDesc(w0NEWPRD.toString().Trim(), LM_MFGLOC.toString().Trim())
+			           w0NEWLBL    = LM_NWPRDLB.toString().Substring(5,3)
+			           w0NEWLBLDSC = *this.ReadLabel(w0NEWLBL.toString().Trim())
+					EndIf
+					      
+					w0NWPRDLB = LM_NWPRDLB.toString().Trim()
+                              
+				When KeyCategory = "NP" //New Base Product
+					// Define condition for new product in New Base Product Code Path
+					If PJ_BASPRD <> *Zeros
+						w0NEWPRD = PJ_BASPRD.toString().Trim()
+						w0NEWPRDDSC = *this.getPrdDesc(w0NEWPRD.toString().Trim(), PJ_LOCN.toString().Trim())
+					Else 
+						// check for duplicate record
+						Lookup Source(LM_NWPRDLB.toString().Trim()) Table(ArrayNWPRDLB) EQ(w0Found) FndIndex(Idx)
+						If w0Found
+							Goto Next
+						EndIf                  
+						w0NEWPRDDSC = "New Product "							
+					EndIf                  
+                                             
+					If LM_NWPRDLB.toString().IndexOf("NEW") >= *Zeros
+						w0NEWLBL    = *Blanks
+						w0NEWLBLDSC = LM_NEWLBL.toString().Trim()                    
+					Else
+						w0NEWLBL    = LM_NWPRDLB.toString().Trim()
+						w0NEWLBLDSC = *this.ReadLabel(LM_NWPRDLB.toString().Trim())
+					EndIf  
+               
+					If PJ_BASPRD <> *Zeros
+						w0NWPRDLB = String.Format("{0}{1}", w0NEWPRD.toString().Trim(), LM_NWPRDLB.toString().Trim())
+					Else
+						w0NWPRDLB = String.Format("{0}{1}", "NEW", LM_NWPRDLB.toString().Trim())
+					EndIF
+               
+					w0NP = *True //set up at least one line in grid for new product
+               
+				When KeyCategory = "NL" //New Label
+					Clear w0NEWLBL 
+					Clear w0NEWPRD
+                                             
+					If LM_NWPRDLB.toString().IndexOf("NEW") >= *Zeros
+						w0NEWLBL    = *Blanks
+						w0NEWLBLDSC = LM_NEWLBL.toString().Trim()                    
+					Else
+						w0NEWLBL    = LM_NWPRDLB.toString().Trim()
+						w0NEWLBLDSC = *this.ReadLabel(LM_NWPRDLB.toString().Trim())
+					EndIf        
+               
+					If PJ_BASPRD <> *Zeros
+						w0NEWPRD    = PJ_BASPRD.toString().Trim() 
+						w0NEWPRDDSC = *this.getPrdDesc(w0NEWPRD.toString().Trim(), PJ_LOCN.toString().Trim())
+					EndIf
+					w0NWPRDLB = String.Format("{0}{1}", w0NEWPRD.toString().Trim(), LM_NWPRDLB.toString().Trim())
+					
+				When KeyCategory = "BE" //Big Event 
+								
+				     w0NEWPRD    = LM_NWPRDLB.toString().Substring(0,5)
+				     w0NEWPRDDSC = *this.getPrdDesc(w0NEWPRD.toString().Trim(), LM_MFGLOC.toString().Trim())
+			         w0NEWLBL    = LM_NWPRDLB.toString().Substring(5,3)
+			         w0NEWLBLDSC = *this.ReadLabel(w0NEWLBL.toString().Trim())
+				
+				EndSl
+				  
+				  //Check if first charachter is a number - then product is found				  
+				  try
+				   if (Int32.Parse(w0NEWPRD.ToString().Substring(0,1))+Int32.Parse(w0NEWPRD.ToString().Substring(1,1))>0)
+				      productFound = *true
+				   EndIf   
+				  Catch ex Type(Exception)
+				  EndTry
+									
+					if NOT productFound AND PJ_BASPRD <> *Zeros
+					   w0NEWLBL = w0NEWPRD.Trim()
+					   w0NEWPRD = PJ_BASPRD.toString().Trim()
+					EndIF
+            
+				// only for new product/label
+				//If w0NWPRDLB.toString().IndexOf("NEW") >= *Zeros or SummaryFormParm = "Y"
+				////w0ProdFound = ReadSkuFile(w0NEWPRD.toString().Trim(),  w0NEWLBL.toString().Trim())
+				////If Not w0ProdFound or SummaryFormParm = "Y"
+					Lookup Source(LM_NWPRDLB) Table(ArrayNWPRDLB) EQ(w0Found) FndIndex(Idx)
+					If w0Found = *False
+						dt_Row = dt.NewRow()
+      					Try
+							dt_Row("NewProduct")        = String.Format("{0}", w0NWPRDLB.toString().TRIM())
+							dt_Row("NewProductDesc")    = String.Format("{0}", w0NEWPRDDSC.toString().TRIM())
+							dt_Row("NewLabelDesc")      = String.Format("{0}", w0NEWLBLDSC.toString().TRIM()) 
+							dt_Row("NewProductToolTip") = String.Format("{0}{1}", w0NEWPRDDSC.toString().Trim(), w0NEWLBLDSC.toString().Trim())   
+						Catch ex Type(Exception)
+						EndTry
+	         
+						w0ProdFound = ReadSkuFile(w0NEWPRD.toString().Trim(),  w0NEWLBL.toString().Trim())
+						ReadLabel(w0NEWLBL.toString().Trim())
+						dt_Row("Product")        = String.Format("{0}", w0NEWPRD.toString().TRIM()) 
+						dt_Row("Label")          = String.Format("{0}", w0NEWLBL.toString().TRIM()) 
+						dt_Row("Description")    = String.Format("{0}", *this.getDesc())						
+						//If w0ProdFound = *True
+						If isFinalApprover = *False
+							dt_Row("PrdEnable")      = *false 
+							dt_Row("LblEnable")      = *false 
+						Else
+							dt_Row("PrdEnable")      = *true
+							dt_Row("LblEnable")      = *true 
+						Endif							
+
+//						If w0NEWPRD = *Blanks
+//							dt_Row("Product")        = String.Empty
+//							dt_Row("PrdEnable")      = *true
+//						Else
+//							dt_Row("Product")        = String.Format("{0}", w0NEWPRD.toString().TRIM()) 
+//							dt_Row("PrdEnable")      = *false 
+//						EndIf
+//	          
+//						If w0NEWLBL = *Blanks
+//							dt_Row("Label")          = String.Empty
+//							dt_Row("LblEnable")      = *true
+//						Else
+//							dt_Row("Label")          = String.Format("{0}", w0NEWLBL.toString().TRIM()) 
+//							dt_Row("LblEnable")      = *false 
+//						EndIf
+//	         
+//						If w0NEWPRD <> *Blanks and w0NEWLBL <> *Blanks
+//							dt_Row("Description")       = String.Format("{0}", *this.getDesc())
+//						Else
+//							dt_Row("Description")       = String.Empty
+//						EndIF
+	          
+						dt_Row("LM_NWPRDLB")        = LM_NWPRDLB.toString().Trim()
+	          
+						//If SummaryFormParm = "Y"
+
+	         				dt_Row("UPC14")             = String.Format("{0}", *this.getUPC14()) 
+							dt_Row("UPC12")             = String.Format("{0}", *this.getUPC12())
+							dt_Row("Group")             = String.Format("{0}", *this.getGroup())
+							dt_Row("Reference")         = String.Format("{0}", *this.getReference())
+//						Else	         
+//							dt_Row("UPC14")             = String.Empty
+//							dt_Row("UPC12")             = String.Empty
+//							dt_Row("Group")             = String.Empty
+//							dt_Row("Reference")         = String.Empty 	            
+//						EndIF    
+	        	        
+						// check for duplicate record
+						Lookup Source(*Blanks) Table(ArrayNWPRDLB) EQ(w0Found) FndIndex(Idx)
+						If w0Found
+							ArrayNWPRDLB(Idx) = LM_NWPRDLB
+						EndIf   
+	        
+						dt.Rows.Add(dt_Row)
+					EndIf    
+				////EndIF     				
+                      
+				Tag Name(Next)
+                     
+				ReadE StrapLoc Key(KyProj)
+			EndDo
+			
+			EndIf
+         
+			Close StrapLoc
+			Close StrapProj
+//		Else 
+//			Open StrapSKU
+//			// load existing New Product/New Label info for view
+//			Setll StrapSKU Key(KyProj)
+//			ReadE StrapSKU Key(KyProj)
+//			DoWhile Not StrapSKU.IsEOF 
+//				dt_Row = dt.NewRow()
+//   				dt_Row("NewProduct")        = String.Format("{0}", SK_NWPRDLB.toString().TRIM())
+//   				dt_Row("NewProductDesc")    = String.Format("{0}", SK_NEWPRD.toString().TRIM()) 
+//   				dt_Row("NewLabelDesc")      = String.Format("{0}", SK_NEWLBL.toString().TRIM())
+//				dt_Row("NewProductToolTip") = String.Format("{0}{1}", SK_NEWPRD.toString().Trim(), SK_NEWLBL.toString().Trim())   
+//				dt_Row("Product")           = String.Format("{0}", SK_BASPRD.toString()) 
+//				dt_Row("Label")             = String.Format("{0}", SK_LABEL.toString())
+//				ReadSkuFile(SK_BASPRD.ToString(), SK_LABEL.Trim())
+//				ReadLabel(SK_LABEL.Trim())
+//				dt_Row("Description")       = String.Format("{0}", *this.getDesc())
+//				dt_Row("UPC14")             = String.Format("{0}", *this.getUPC14())
+//				dt_Row("UPC12")             = String.Format("{0}", *this.getUPC12())
+//				dt_Row("Group")             = String.Format("{0}", *this.getGroup())
+//				dt_Row("Reference")         = String.Format("{0}", *this.getReference())
+//				dt_Row("PrdEnable")         = *false
+//				dt_Row("LblEnable")         = *false
+//				dt_Row("LM_NWPRDLB")        = SK_NWPRDLB.toString().Trim()
+//	        
+//				dt.Rows.Add(dt_Row)   
+//                     
+//				ReadE StrapSKU Key(KyProj)
+//			EndDo 
+//         
+//			Close StrapSKU 
+		//EndIf 
+           
+        _dsSKU.Tables.Add(dt)
+        LeaveSr (_dsSKU)
+    EndFunc
+    
+    DclFld _userID Type(*String)
+    BegProp userID Type(*String) Access(*Public)
+		BegGet
+		   LeaveSr Value(_userID)            
+		EndGet 
+		BegSet
+		   _userID = *PropVal
+		EndSet
+    EndProp 
+    
+    DclFld _fileDir Type(*String)
+    BegProp fileDir Type(*String) Access(*Public)
+		BegGet
+		   LeaveSr Value(_fileDir)            
+		EndGet 
+		BegSet
+		   _fileDir = *PropVal
+		EndSet
+    EndProp 
+    
+    BegProp getUPC14 Type(*String) Access(*Public)
+		BegGet
+			If SK_UPC_14 > *Zeros
+				LeaveSR %EditC(SK_UPC_14:'X') 
+			Else
+				LeaveSR String.Empty
+			EndIf
+		EndGet 
+    EndProp   
+    
+    BegProp getUPC12 Type(*String) Access(*Public)
+		BegGet		   
+			If SK_UPC_12 > *Zeros
+				LeaveSR %EditC(SK_UPC_12:'X')
+			Else
+				LeaveSR String.Empty
+			EndIf
+		EndGet 
+    EndProp    
+    
+    BegProp getGroup Type(*String) Access(*Public)
+		BegGet
+			LeaveSR SK_PRDGRP.toString().Trim() 
+		EndGet 
+    EndProp  
+    
+    BegProp getReference Type(*String) Access(*Public)
+		BegGet
+			LeaveSR SK_CUSPRF.toString().Trim() 
+		EndGet 
+    EndProp    
+    
+    BegProp getDesc Type(*String) Access(*Public)
+		BegGet
+			LeaveSR String.Format("{0} {1}", SK_SKUDSC.toString().Trim(), INLDSC)
+		EndGet 
+    EndProp   
+    
+    BegFunc	ReadSKUFile	 Type(*Boolean) Access(*Public)
+		DclSrParm p_product Type(*String)
+		DclSrParm p_label   Type(*String)
+
+		DclFld RecordFound	Type(*Boolean)
+		
+		Open  SKUFile
+		Open  ProdMasterA
+        
+        RecordFound = *True
+        Try
+			Move p_product KeyProduct 
+			Move p_label   KeyLabel 
+			Chain SKUFile Key(KyProdLbl)
+			If not SKUFile.IsFound()
+				Clear SK_UPC_14			
+				Clear SK_UPC_12
+				Clear SK_PRDGRP
+				Clear SK_CUSPRF
+				Clear SK_SKUDSC
+				Chain ProdMasterA Key(KeyProduct)
+				If ProdMasterA.IsFound()
+					SK_SKUDSC = CBDESC
+				Endif
+				RecordFound = *False
+			Endif
+		Catch ex	Type(Exception)
+			RecordFound = *False
+		EndTry
+          
+		Close SKUFile
+		Close ProdMasterA
+		Leavesr	RecordFound
+	EndFunc
+	
+	BegFunc ReadLabel Type(*String)	Access(*Public)
+		DclsrParm p_label Type(*String)
+		
+		Open  LabelMaster
+        
+        Chain LabelMaster   Key(p_label.Trim())
+		If not LabelMaster.IsFound()
+			Clear INLDSC
+		Endif
+
+        Close LabelMaster
+        Leavesr INLDSC.toString().Trim()
+	EndFunc
+    
+    BegProp getRequestorID Type(*String) Access(*Public)
+     
+     BegGet
+       DclFld requestor Like(PJ_ENTERBY) 
+       
+       Open  StrapProj
+   
+        Clear PJ_ENTERBY
+        Clear PJ_SPRUSR
+        Clear PJ_STATUS
+        Chain StrapProj Key(KyProj) Access(*Nolock)
+        If PJ_STATUS = "A" OR PJ_STATUS = "C" OR PJ_STATUS = "R"
+           requestor = PJ_ENTERBY
+        Else
+           If PJ_SPRUSR <> *Blanks
+            requestor = PJ_SPRUSR
+           Else
+            requestor = PJ_ENTERBY
+           EndIf    
+        EndIF
+                          
+       Close StrapProj
+       
+       LeaveSR requestor.toString().Trim() 
+     EndGet 
+    EndProp     
+    
+    BegProp getCC Type(*String) Access(*Public)
+     
+     BegGet
+            
+       DclFld Emails		Type( System.Collections.ArrayList ) New()
+       DclFld msgbld		Type(System.text.StringBuilder)
+       DclFld wkEmail		Type(*String)
+       DclFld	gr			Type( GlobalRoutine ) New()
+       
+       // 01/16/07 BH -- Remove hardcoding for email addresses
+       
+       msgbld = *New System.text.StringBuilder()
+	   // 01/16/07 BH 
+	   
+	   gr.pgmDB   = *this.pgmDB
+	   If *This.fileDir <> *Nothing
+	      gr.fileDir = *This.fileDir
+	   Else
+	      gr.fileDir = GlobalRoutine.GetFileDir()
+	   EndIf
+	   
+	   wkEmail = gr.getEmail(GlobalRoutine.getUserID().toUpper().Trim())
+       
+       Open  StrapProj
+       Open  StrapLoc
+       Open  Exception
+       Open  SecurityHdr
+       Open  ServiceMgr
+       Open  StrapApprovalC
+       Open  StrapSku
+       Open  XFerStop
+       Open  NewEmails
+       Open  Locations
+       
+       // send to itself       
+//       If Not Emails.Contains(%trim(String.Format("{0}{1}", GlobalRoutine.getUserID().toUpper().Trim(), "@VENTURAFOODS.COM")))        
+//          msgbld.Append(String.Format("{0}{1}", GlobalRoutine.getUserID().toUpper().Trim(), "@VENTURAFOODS.COM"))
+//          Emails.Add(%trim(String.Format("{0}{1}", GlobalRoutine.getUserID().toUpper().Trim(), "@VENTURAFOODS.COM")))
+//       EndIf
+       If Not Emails.Contains(wkEmail.Trim())
+          msgbld.Append(wkEmail.Trim())
+          Emails.Add(wkEmail.Trim())
+       EndIf
+
+       
+       Chain StrapProj Key(KyProj) Access(*Nolock)
+       If StrapProj.IsFound()
+         
+         // Send Cc Email to Super User if project is Active 
+         If PJ_STATUS = "A" AND PJ_SPRUSR <> *Blanks OR PJ_STATUS = "C" AND PJ_SPRUSR <> *Blanks OR ++
+            PJ_STATUS = "D" AND PJ_SPRUSR <> *Blanks OR PJ_STATUS = "R" AND PJ_SPRUSR <> *Blanks OR ++
+            PJ_CATEG = "BE" AND PJ_SPRUSR <> *Blanks
+             msgbld.Append(";")
+             msgbld.Append(gr.getEmail(PJ_SPRUSR.ToString().Trim()))
+             Emails.Add(gr.getEmail(PJ_SPRUSR.ToString().Trim()))
+         EndIF
+          
+          KeyCategory = PJ_CATEG
+          KeyRegion   = PJ_APTREE
+          Setll StrapApprovalC Key(KyCategRgn)
+          ReadE StrapApprovalC Key(KyCategRgn)
+          DoWhile Not StrapApprovalC.isEoF() 
+          
+           //pull out email address by user id 
+           Chain SecurityHdr Key(AP_USERID)
+           If SecurityHdr.IsFound()
+          
+             If Not Emails.Contains(%trim(SYJDESC))        
+             msgbld.Append(";")
+             msgbld.Append(%trim(SYJDESC))
+             Emails.Add(%trim(SYJDESC))
+             EndIf
+                  
+            EndIf
+          ReadE StrapApprovalC Key(KyCategRgn)
+          EndDo
+          
+       EndIf
+       
+       KeyExcpt = "SLSCOORD"
+       // send to ship location SLSCOORD 
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj) 
+        DoWhile Not StrapLoc.IsEof()
+        
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = LM_LOCATN and Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+               
+       ReadE StrapLoc Key(KyProj)
+       EndDo      
+
+       
+       // send to mfg location SLSCOORD
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj)
+        DoWhile Not StrapLoc.IsEof()
+        
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = LM_MFGLOC and Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+       
+       ReadE StrapLoc Key(KyProj)
+       EndDo       
+              
+       //Run for responsible locations
+       KeyExcpt = "SLSCOORD"
+       // send to ship location SLSCOORD 
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj) 
+        DoWhile Not StrapLoc.IsEof()
+        
+        CHAIN Locations Key(LM_LOCATN)
+        If SYRLOC <> *Zeros
+         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = SYRLOC and Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+       EndIf 
+               
+       ReadE StrapLoc Key(KyProj)
+       EndDo
+       
+       //Run for responsible locations
+       // send to mfg location SLSCOORD
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj)
+        DoWhile Not StrapLoc.IsEof()
+        
+        CHAIN Locations Key(LM_MFGLOC)
+        If SYRLOC <> *Zeros
+        
+         Setll Exception Key(KeyExcpt)
+         ReadE Exception Key(KeyExcpt)
+         DoWhile Not Exception.IsEof()
+         
+          If EXSLOC = SYRLOC and Not Emails.Contains(%trim(EXCVAL))
+           msgbld.Append(";")
+           msgbld.Append(%trim(EXCVAL))
+           Emails.Add(%trim(EXCVAL))
+          EndIf
+         
+         ReadE Exception Key(KeyExcpt)
+         EndDo
+        EndIf 
+       
+       ReadE StrapLoc Key(KyProj)
+       EndDo 
+       
+       //Run on additional stops
+       // send to stop location SLSCOORD
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj)
+        DoWhile Not StrapLoc.IsEof()
+        
+        Setll XFerStop Key(KyStop)
+        ReadE XFerStop key(KyStop)
+         Dowhile Not XFerStop.IsEof()
+         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = ST_STPLOC  and Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+        ReadE XFerStop key(KyStop)
+        EndDo
+       
+       ReadE StrapLoc Key(KyProj)
+       EndDo
+       
+       // send to Service Managers
+       Setll ServiceMgr Key(KyProj)
+       ReadE ServiceMgr Key(KyProj)
+       DoWhile Not ServiceMgr.IsEof()
+        
+        //pull out email address by user id 
+        MoveL SM_SRVM KeySrvMgr
+        Chain SecurityHdr Key(KeySrvMgr)
+        If SecurityHdr.IsFound()
+          
+          If Not Emails.Contains(%trim(SYJDESC))        
+           msgbld.Append(";")
+           msgbld.Append(%trim(SYJDESC))
+           Emails.Add(%trim(SYJDESC))
+          EndIf
+                  
+        EndIf
+       
+       ReadE ServiceMgr Key(KyProj)
+       EndDo    
+       
+       // send to addtnl email for STRAP exclude Big Event (getCC_Collection)
+       KyStrapEmail = "STRAPEML"        
+       Setll Exception Key(KyStrapEmail)
+       ReadE Exception Key(KyStrapEmail)
+       DoWhile Not Exception.IsEof()
+       
+          If Not Emails.Contains(%trim(EXCVAL)) and EXSLOC = 999 and (EXLABL = *blanks or %Trim(EXLABL) = KeyCategory)
+          
+           msgbld.Append(";")
+           msgbld.Append(%trim(EXCVAL))
+           Emails.Add(%trim(EXCVAL))
+           
+          EndIf
+     
+       ReadE Exception Key(KyStrapEmail)
+       EndDo  
+       
+       // send to Exceptions "STRAPEML" exclude Big Event (getCC_Collection)
+       KeyExcpt = "STRAPEML"
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj)
+        DoWhile Not StrapLoc.IsEof()
+        
+        KeyLocn = LM_MFGLOC
+        Setll Exception Key(KyExcptLocn)
+        ReadE Exception Key(KyExcptLocn)
+        DoWhile Not Exception.IsEof()
+         
+         If  Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KyExcptLocn)
+        EndDo
+        
+        KeyLocn = LM_LOCATN
+        Setll Exception Key(KyExcptLocn)
+        ReadE Exception Key(KyExcptLocn)
+        DoWhile Not Exception.IsEof()
+         
+         If  Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KyExcptLocn)
+        EndDo
+        
+        //Run on additional stops from MFG loc to Ship Loc (CBFSTOP)
+        Setll XFerStop Key(KyStop)
+        ReadE XFerStop key(KyStop)
+         Dowhile Not XFerStop.IsEof()
+        
+        KeyLocn = ST_STPLOC
+        Setll Exception Key(KyExcptLocn)
+        ReadE Exception Key(KyExcptLocn)
+        DoWhile Not Exception.IsEof()
+         
+         If  Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KyExcptLocn)
+        EndDo
+   
+        ReadE XFerStop key(KyStop)
+        EndDo
+       
+       ReadE StrapLoc Key(KyProj)
+       EndDo
+       
+       //----------STRAPSKU------
+       Setll StrapSku Key(KyProj) 
+       If StrapSku.IsEqual()
+       
+       KyStrapEmail = "STRAPSKU"      
+       Setll Exception Key(KyStrapEmail)
+       ReadE Exception Key(KyStrapEmail)
+       DoWhile Not Exception.IsEof()
+    
+         If  Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+
+       ReadE Exception Key(KyStrapEmail)
+       EndDo
+       
+       EndIf    
+       
+       // send to addtnl email for STRAP CC to Person based on "STRAPCC" in CSFXCPT file (EXNVAL)
+       KyStrapEmail = "STRAPCC"        
+       Setll Exception Key(KyStrapEmail)
+       ReadE Exception Key(KyStrapEmail)
+       DoWhile Not Exception.IsEof()
+        
+        If EXCVAL.ToString().Trim().Equals(GlobalRoutine.getUserID().toUpper().Trim()) OR ++
+           EXCVAL.ToString().Trim().Equals(PJ_ENTERBY.ToString().toUpper().Trim())
+          
+          Chain SecurityHdr Key(EXNVAL.ToString().Trim())
+          If SecurityHdr.IsFound AND SYJDESC <> *Blanks
+           If Not Emails.Contains(%trim(SYJDESC.ToString().Trim())) and EXSLOC = 999 and (EXLABL = *blanks or %Trim(EXLABL) = KeyCategory)
+          
+            msgbld.Append(";")
+            msgbld.Append(%trim(SYJDESC.ToString().Trim()))
+            Emails.Add(%trim(SYJDESC.ToString().Trim()))
+           
+           EndIf
+          EndIf
+           
+         EnDIf
+       
+       ReadE Exception Key(KyStrapEmail)
+       EndDo  
+       
+       //Add STRAPRGN for specific region like "001" West Region  
+       MoveL PJ_ENTERBY KeySrvMgr
+       Clear SYREGN 
+       Chain SecurityHdr Key(KeySrvMgr)
+       IF PJ_REGION = *Zeros
+          PJ_REGION = SYREGN
+       EndIf 
+       
+        If PJ_REGION <> *Zeros
+          KeyExcpt = "STRAPRGN"  
+          SetLL Exception   Key(KeyExcpt)
+          ReadE Exception   Key(KeyExcpt)        
+          DoWhile NOT Exception.IsEOF()
+          
+           If  PJ_REGION = EXREGN 
+          
+            If Not Emails.Contains(EXCVAL.ToString().Trim())         
+             Emails.Add(EXCVAL.ToString().Trim())
+             msgbld.Append(";")
+             msgbld.Append(EXCVAL.ToString().Trim())
+            EndIf
+           
+           EndIf
+          
+          ReadE Exception   Key(KeyExcpt)  
+          EndDo
+                   
+        EndIf     
+       
+       //Add Additioanl Emails per Final Approver Request for Specific Project       
+       Setll NewEmails Key(KeyProject#:KeySeq#)
+       ReadE NewEmails Key(KeyProject#:KeySeq#)
+       DoWhile Not NewEmails.IsEof()
+        
+           If NOT Emails.Contains(EM_EMAIL.ToString().Trim())
+          
+            msgbld.Append(";")
+            msgbld.Append(EM_EMAIL.ToString().Trim())
+            Emails.Add(EM_EMAIL.ToString().Trim())
+           
+           EndIf
+       
+       ReadE NewEmails Key(KeyProject#:KeySeq#)
+       EndDo           
+         
+         msgbld = *New System.text.StringBuilder()
+       
+         DclFld noDups Type(System.Collections.ArrayList) New()
+         noDups = gr.NoDupEmails(Emails) 
+         ForEach  Name(email) Collection(noDups) Type(*String)
+            msgbld.Append(";")
+            msgbld.Append(email.Trim())
+         EndFor 
+             
+       Close Locations 
+       Close StrapApprovalC
+       Close SecurityHdr
+       Close ServiceMgr           
+       Close StrapLoc
+       Close StrapProj
+       Close Exception 
+       Close StrapSku
+       Close XFerStop
+       Close NewEmails
+       
+       LeaveSR msgbld.ToString() 
+     EndGet 
+     
+    EndProp  
+    
+    BegFunc getCC_Collection Type( System.Collections.ArrayList ) Access(*Public)
+       DclSrParm Emails Type( System.Collections.ArrayList )
+       
+       DclFld msgbld	Type(System.text.StringBuilder)
+       DclFld wkEmail	Type(*String)
+       DclFld	gr		Type( GlobalRoutine ) New()
+
+	   // 01/16/07 BH -- Remove hardcoding in email address
+	   gr.pgmDB   = *this.pgmDB
+	   If *This.fileDir <> *Nothing
+	      gr.fileDir = *This.fileDir
+	   Else
+	      gr.fileDir = GlobalRoutine.GetFileDir()
+	   EndIf
+	   
+       msgbld = *New System.text.StringBuilder()
+       If *This.userID = *Nothing
+       wkEmail = gr.getEmail(GlobalRoutine.getUserID().toUpper().Trim())
+       Else
+       wkEmail = gr.getEmail(*This.userID.ToUpper().Trim())
+       EndIF
+              
+       Open  StrapLoc       
+       Open  Exception
+       Open  SecurityHdr
+       Open  ServiceMgr
+       Open  StrapApprovalC
+       Open  StrapProj
+       Open  XFerStop
+       Open  Locations 
+       
+
+       // send to itself
+//       If Not Emails.Contains(%trim(String.Format("{0}{1}", GlobalRoutine.getUserID().toUpper().Trim(), "@VENTURAFOODS.COM")))        
+//          Emails.Add(%trim(String.Format("{0}{1}", GlobalRoutine.getUserID().toUpper().Trim(), "@VENTURAFOODS.COM")))
+//       EndIf
+       If Not Emails.Contains(wkEmail.Trim())
+          Emails.Add(wkEmail.Trim())
+       EndIf      
+       
+       Chain StrapProj Key(KyProj) Access(*Nolock)
+       If StrapProj.IsFound()
+       
+          // Send Cc Email to Super User if project is Active 
+         If PJ_STATUS = "A" AND PJ_SPRUSR <> *Blanks OR PJ_STATUS = "C" AND PJ_SPRUSR <> *Blanks OR ++
+            PJ_STATUS = "D" AND PJ_SPRUSR <> *Blanks OR PJ_STATUS = "R" AND PJ_SPRUSR <> *Blanks OR ++
+            PJ_CATEG = "BE" AND PJ_SPRUSR <> *Blanks
+           If Not Emails.Contains(gr.getEmail(PJ_SPRUSR.ToString().Trim()))
+              Emails.Add(gr.getEmail(PJ_SPRUSR.ToString().Trim()))
+              msgbld.Append(";")
+              msgbld.Append(gr.getEmail(PJ_SPRUSR.ToString().Trim()))
+           EndIf  
+          EndIF
+          
+          KeyCategory = PJ_CATEG
+          KeyRegion   = PJ_APTREE
+          Setll StrapApprovalC Key(KyCategRgn)
+          ReadE StrapApprovalC Key(KyCategRgn)
+          DoWhile Not StrapApprovalC.isEoF() 
+          
+           //pull out email address by user id 
+           Chain SecurityHdr Key(AP_USERID)
+           If SecurityHdr.IsFound()
+          
+             If Not Emails.Contains(SYJDESC.ToString().Trim())        
+             msgbld.Append(";")
+             msgbld.Append(SYJDESC.ToString().Trim())
+             Emails.Add(SYJDESC.ToString().Trim())
+             EndIf
+                  
+            EndIf
+          ReadE StrapApprovalC Key(KyCategRgn)
+          EndDo
+        
+        
+        //Add STRAPRGN for specific region like "001" West Region  
+        MoveL PJ_ENTERBY KeySrvMgr
+        Clear SYREGN 
+        Chain SecurityHdr Key(KeySrvMgr)
+        IF PJ_REGION = *Zeros
+          PJ_REGION = SYREGN
+        EndIf
+       
+        If PJ_REGION <> *Zeros
+          KeyExcpt = "STRAPRGN"  
+          SetLL Exception   Key(KeyExcpt)
+          ReadE Exception   Key(KeyExcpt)        
+          DoWhile NOT Exception.IsEOF()
+          
+           If  PJ_REGION = EXREGN 
+          
+            If Not Emails.Contains(EXCVAL.ToString().Trim())         
+             Emails.Add(EXCVAL.ToString().Trim())
+             msgbld.Append(";")
+             msgbld.Append(EXCVAL.ToString().Trim())
+            EndIf
+           
+           EndIf
+          
+          ReadE Exception   Key(KeyExcpt) 
+          EndDo         
+        EndIf     
+          
+        EndIf
+       
+       
+           
+       // send to ship location SLSCOORD 
+       Setll StrapLoc Key(KyProj)
+       ReadE StrapLoc Key(KyProj)
+        DoWhile Not StrapLoc.IsEof()
+        
+        KeyExcpt = "SLSCOORD"   
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = LM_LOCATN and Not Emails.Contains(EXCVAL.ToString().Trim())         
+          Emails.Add(EXCVAL.ToString().Trim())
+          msgbld.Append(";")
+          msgbld.Append(EXCVAL.ToString().Trim())
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = LM_MFGLOC and Not Emails.Contains(EXCVAL.ToString().Trim())        
+          Emails.Add(EXCVAL.ToString().Trim())
+          msgbld.Append(";")
+          msgbld.Append(EXCVAL.ToString().Trim())
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+        CHAIN Locations Key(LM_LOCATN)
+        If SYRLOC <> *Zeros
+         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = SYRLOC and Not Emails.Contains(%trim(EXCVAL))
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+       EndIf 
+        
+       //Run for responsible locations
+       // send to mfg location SLSCOORD      
+        CHAIN Locations Key(LM_MFGLOC)
+        If SYRLOC <> *Zeros
+        
+         Setll Exception Key(KeyExcpt)
+         ReadE Exception Key(KeyExcpt)
+         DoWhile Not Exception.IsEof()
+         
+          If EXSLOC = SYRLOC and Not Emails.Contains(EXCVAL.ToString().Trim())
+           msgbld.Append(";")
+           msgbld.Append(%trim(EXCVAL))
+           Emails.Add(%trim(EXCVAL))
+          EndIf
+         
+         ReadE Exception Key(KeyExcpt)
+         EndDo
+        EndIf 
+      
+       //Run on additional stops
+       // send to stop location SLSCOORD
+        
+        Setll XFerStop Key(KyStop)
+        ReadE XFerStop key(KyStop)
+         Dowhile Not XFerStop.IsEof()
+         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = ST_STPLOC  and Not Emails.Contains(EXCVAL.ToString().Trim())
+          msgbld.Append(";")
+          msgbld.Append(%trim(EXCVAL))
+          Emails.Add(%trim(EXCVAL))
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+        ReadE XFerStop key(KyStop)
+        EndDo
+       
+        //run on Transfer-In stops to accumulate emails for stops
+        Setll XFerStop Key(KyStop)
+        ReadE XFerStop key(KyStop)
+         Dowhile Not XFerStop.IsEof()
+         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = ST_STPLOC  and Not Emails.Contains(EXCVAL.ToString().Trim())
+            Emails.Add(EXCVAL.ToString().Trim())
+            msgbld.Append(";")
+            msgbld.Append(EXCVAL.ToString().Trim())
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+        
+        ReadE XFerStop key(KyStop)
+        EndDo
+        
+        KeyExcpt = "STRAPEML"       
+       // send to ship location STRAPEML         
+        Setll Exception Key(KeyExcpt)
+        ReadE Exception Key(KeyExcpt)
+        DoWhile Not Exception.IsEof()
+         
+         If EXSLOC = LM_LOCATN and Not Emails.Contains(EXCVAL.ToString().Trim()) and (EXLABL = *blanks or %Trim(EXLABL) = KeyCategory)        
+          Emails.Add(EXCVAL.ToString().Trim())
+          msgbld.Append(";")
+          msgbld.Append(EXCVAL.ToString().Trim())
+         EndIf
+         
+        ReadE Exception Key(KeyExcpt)
+        EndDo
+         
+       ReadE StrapLoc Key(KyProj)
+       EndDo
+       
+       // send to Service Managers
+       Setll ServiceMgr Key(KyProj)
+       ReadE ServiceMgr Key(KyProj)
+       DoWhile Not ServiceMgr.IsEof()
+        
+        //pull out email address by user id 
+        MoveL SM_SRVM KeySrvMgr
+        Chain SecurityHdr Key(KeySrvMgr)
+        If SecurityHdr.IsFound()
+          
+          If Not Emails.Contains(SYJDESC.ToString().Trim()) 
+           Emails.Add(SYJDESC.ToString().Trim())
+           msgbld.Append(";")
+           msgbld.Append(SYJDESC.ToString().Trim())
+          EndIf
+                  
+        EndIf
+       
+       ReadE ServiceMgr Key(KyProj)
+       EndDo 
+       
+       // send to addtnl email for STRAP exclude Big Event (getCC_Collection)
+       KyStrapEmail = "STRAPEML"        
+       Setll Exception Key(KyStrapEmail)
+       ReadE Exception Key(KyStrapEmail)
+       DoWhile Not Exception.IsEof()
+       
+          If Not Emails.Contains(EXCVAL.ToString().Trim()) and EXSLOC = 999 and (EXLABL = *blanks or %Trim(EXLABL) = KeyCategory)
+          
+           msgbld.Append(";")
+           msgbld.Append(EXCVAL.ToString().Trim())
+           Emails.Add(EXCVAL.ToString().Trim())
+           
+          EndIf
+     
+       ReadE Exception Key(KyStrapEmail)
+       EndDo  
+       
+       // send to addtnl email for STRAP CC to Person based on "STRAPCC" in CSFXCPT file (EXNVAL)
+       KyStrapEmail = "STRAPCC"        
+       Setll Exception Key(KyStrapEmail)
+       ReadE Exception Key(KyStrapEmail)
+       DoWhile Not Exception.IsEof()
+        
+        If EXCVAL.ToString().Trim().Equals(GlobalRoutine.getUserID().toUpper().Trim())
+          
+          Chain SecurityHdr Key(EXNVAL.ToString().Trim())
+          If SecurityHdr.IsFound AND SYJDESC <> *Blanks
+           If Not Emails.Contains(SYJDESC.ToString().Trim()) and EXSLOC = 999 and (EXLABL = *blanks or %Trim(EXLABL) = KeyCategory)
+          
+            msgbld.Append(";")
+            msgbld.Append(SYJDESC.ToString().Trim())
+            Emails.Add(SYJDESC.ToString().Trim())
+           
+           EndIf
+          EndIf
+           
+         EnDIf
+       
+       ReadE Exception Key(KyStrapEmail)
+       EndDo 
+       
+          //Add BE Approvers to the Cc list
+          KeyExcpt = "BEAPPROV"  
+          SetLL Exception   Key(KeyExcpt)
+          ReadE Exception   Key(KeyExcpt)        
+          DoWhile NOT Exception.IsEOF()
+      
+             Emails.Add(EXCVAL.ToString().Trim())
+             msgbld.Append(";")
+             msgbld.Append(EXCVAL.ToString().Trim())
+         
+          ReadE Exception   Key(KeyExcpt) 
+          EndDo  
+       
+       
+       Close Locations 
+       Close XFerStop
+       Close SecurityHdr
+       Close ServiceMgr           
+       Close StrapLoc
+       Close Exception 
+       Close StrapApprovalC
+       Close StrapProj
+       
+       LeaveSR gr.NoDupEmails(Emails)
+   
+    EndFunc          
+    
+    BegFunc getCC_BEAPPROV Type( System.Collections.ArrayList ) Access(*Public)
+       
+       DclFld Emails Type( System.Collections.ArrayList )
+       DclFld msgbld	Type(System.text.StringBuilder)
+       DclFld wkEmail	Type(*String)
+     
+       Open  Exception
+
+       KeyExcpt = "BEAPPROV"  
+          SetLL Exception   Key(KeyExcpt)
+          ReadE Exception   Key(KeyExcpt)        
+          DoWhile NOT Exception.IsEOF()
+      
+             Emails.Add(EXCVAL.ToString().Trim())
+             msgbld.Append(";")
+             msgbld.Append(EXCVAL.ToString().Trim())
+         
+          ReadE Exception   Key(KeyExcpt) 
+          EndDo         
+
+       Close Exception 
+      
+       LeaveSR Emails
+   
+    EndFunc            
+
+    
+    BegProp getPrdDesc   Type(*String) Access(*Public)
+     DclSrParm p_product Type(*String)
+     DclSrParm p_loc     Type(*String)
+   
+     BegGet
+       Open  BaseProductM
+        
+        Try
+			Move p_product.Trim() KeyProduct 
+			Move p_loc.Trim()     KeyLocn
+        
+			Clear INBDSC
+			Chain BaseProductM Key(KyLocnProd)
+
+		Catch ex Type(Exception)
+			INBDSC = *blanks
+		EndTry
+          
+       Close BaseProductM
+       
+       LeaveSR INBDSC.toString().Trim() 
+     EndGet 
+    EndProp  
+    
+   BegProp isProductValid  Type(*Boolean) Access(*Public)
+     DclSrParm p_product Type(*String) 
+     DclSrParm p_label   Type(*String)    
+
+     BegGet
+       DclFld productValid Type(*Boolean)
+
+       Open  SKUFile
+
+        Move p_product.Trim() KeyProduct 
+        Move p_label.Trim()   KeyLabel
+
+        productValid = *false
+        Setll SKUFile Key(KyProdLbl)
+        If SKUFile.IsEqual()
+           productValid = *true
+        EndIF
+
+       Close SKUFile
+
+       LeaveSR productValid 
+     EndGet 
+
+    EndProp    
+     
+    BegSr update Access(*Public) 
+		DclSrParm dgSKU Type(System.Web.UI.WebControls.DataGrid)
+           
+		DclFld A_Product     Type(*char) Len(5)
+		DclFld item          Type(System.Web.UI.WebControls.DataGridItem)
+		DclFld lblNWPRDLB    Type(Label)
+		DclFld lblLM_NWPRDLB Type(Label)
+		DclFld lblNEWPRD     Type(Label)
+		DclFld lblNEWLBL     Type(Label)
+		DclFld txtProduct    Type(TextBox)
+		DclFld txtLabel      Type(TextBox)
+		DclFld w0NWPRDLB     Like(CLM_NWPRDLB)
+		DclFld items         Type( System.Collections.ArrayList ) New()
+		DclFld saveRcd       Type( System.text.StringBuilder )
+		DclFld	gr			 Type( GlobalRoutine ) New()
+	     
+		
+		gr.pgmDB   = *this.pgmDB
+        If *This.fileDir <> *Nothing
+	      gr.fileDir = *This.fileDir
+	    Else
+	      gr.fileDir = GlobalRoutine.GetFileDir()
+	    EndIf
+        
+		Open  StrapSKU
+		Open  StrapProj 
+		Open  StrapLocC
+		
+		Chain StrapProj Key(KyProj)
+		
+        ForEach  Name(item) Collection(dgSKU.Items) Type(DataGridItem)
+			If item.ItemType = ListItemType.Item or item.ItemType = ListItemType.AlternatingItem
+                        
+				lblNWPRDLB    = item.FindControl("lblNWPRDLB")   *as Label
+				lblNEWPRD     = item.FindControl("lblNEWPRD")    *as Label 
+				lblNEWLBL     = item.FindControl("lblNEWLBL")    *as Label 
+				lblLM_NWPRDLB = item.FindControl("lblLM_NWPRDLB")*as Label           
+				txtProduct    = item.FindControl("txtProduct")   *as TextBox
+				txtLabel      = item.FindControl("txtLabel")     *as TextBox  
+            
+				Clear KeyNWPRDLB
+				MoveL lblLM_NWPRDLB.Text.ToString().Trim() KeyNWPRDLB
+                         
+				If KeyCategory = "NL" OR KeyCategory = "FT" OR KeyCategory = "NP" //and PJ_BASPRD <> *Zeros 
+            
+					Chain StrapSKU Key(KyProjNWPRDLB)
+					If    Not StrapSKU.IsFound()
+						Clear SKUS
+             
+						SK_PREFIX  = PJ_PREFIX
+						SK_PROJ#   = KeyProject#
+						SK_PSEQ#   = Keyseq#              
+						SK_NWPRDLB = KeyNWPRDLB
+						SK_NEWPRD  = lblNEWPRD.Text.ToString().Trim()
+						SK_NEWLBL  = lblNEWLBL.Text.ToString().Trim()
+						Move  txtProduct.Text.toString().Trim()  SK_BASPRD
+						SK_LABEL   = txtLabel.Text.ToString().Trim()   
+             
+						Write SKUS
+					Else
+						SK_NEWPRD  = lblNEWPRD.Text.ToString().Trim()
+						SK_NEWLBL  = lblNEWLBL.Text.ToString().Trim()
+						Move  txtProduct.Text.toString().Trim()  SK_BASPRD
+						SK_LABEL   = txtLabel.Text.ToString().Trim()   
+             
+						Update SKUS
+					Endif
+				
+					// Update new product/label in STRAP location files
+					Setll StrapLocC Key(KyProjNWPRDLB)
+					ReadE StrapLocC Key(KyProjNWPRDLB)
+					DoWhile Not StrapLocC.isEOF()
+		            
+		            saveRcd = *New System.text.StringBuilder()
+		            saveRcd.Append(CLM_NWPRDLB)
+		            saveRcd.Append(CLM_LOCATN)
+					saveRcd.Append(CLM_MFGLOC)
+					saveRCD.Append(CLM_DATTIM)
+		            If Not items.Contains(saveRcd.ToString()) 
+						// create new record for new product/label replacement             
+						Select 
+						When KeyCategory = "NP"
+							w0NWPRDLB =  SK_LABEL
+						When KeyCategory = "NL"
+							w0NWPRDLB =  SK_LABEL 
+						When KeyCategory = "FT"
+							Move SK_BASPRD A_Product                
+							w0NWPRDLB =  A_Product  + SK_LABEL
+						EndSl  
+                        
+                        If KeyNWPRDLB <> w0NWPRDLB
+                         // set "delete" status to new product/label
+						 CLM_STATUS = "D" 
+						 Update LOCMC 
+                         
+						 Clear          CLM_STATUS
+						 CLM_NEWPRD  = *Blanks
+						 CLM_NEWLBL  = *Blanks
+						 CLM_NWPRDLB = w0NWPRDLB
+						 Write LOCMC 
+						               
+						EndIf 
+												 
+						items.Add(saveRcd.ToString())
+					EndIf	
+						
+					ReadE StrapLocC Key(KyProjNWPRDLB)	 
+					EndDo
+                 
+                EndIF
+			EndIf 
+        EndFor 
+        
+        // 02/02/07 Update Project Description after finishing updating products and labels
+        				If KeyCategory = "NP" OR KeyCategory = "NL" OR KeyCategory = "FT"
+						Chain StrapProj Key(KyProj)
+						If StrapProj.IsFound()
+							PJ_BASPRD = SK_BASPRD 
+							PJ_LABEL  = SK_LABEL
+							
+							Clear PJ_PROJDES							
+							If PJ_PURCHP = "P" 
+		                       PJ_PROJDES = gr.ProjectDesc(PJ_Proj#.toString(), PJ_PSEQ#.toString(), PJ_Formula.toString(), PJ_BASPRD.toString(), PJ_Label.toString(), *true)  
+			                Else
+		                       PJ_PROJDES = gr.ProjectDesc(PJ_Proj#.toString(), PJ_PSEQ#.toString(), PJ_Formula.toString(), PJ_BASPRD.toString(), PJ_Label.toString(), *false) 			
+			                EndIF
+                          
+							Update PROJ
+						Endif
+					Endif					
+     
+		Close StrapSKU
+		Close StrapLocC
+		Close StrapProj
+	 EndSr   
+    
+  	// Check if Last approver enter info first time
+	BegProp firstTime Type(*Boolean) Access(*Public)
+	 	  
+	  BegGet
+	    
+	    DclFld _firstTime Type(*Boolean)
+	    
+	    _firstTime = *false
+	    
+	    Open  StrapSKU
+  	    Setll StrapSKU Key(KyProj)
+        If Not StrapSKU.isEqual()
+         _firstTime = *true
+        EndIf
+        Close StrapSKU        
+  
+        LeaveSr (_firstTime)
+	    
+	  EndGet
+	EndProp
+	
+	  	// Check if Last approver enter info first time
+	BegProp firstTime Type(*Boolean) Access(*Public)
+		DclSrParm dgInit Type(System.Web.UI.WebControls.DataGrid)
+	  
+		BegGet
+	    
+			DclFld item       Type(System.Web.UI.WebControls.DataGridItem)
+			DclFld lblMfgLoc  Type(System.Web.UI.WebControls.Label)
+			DclFld lblProduct Type(System.Web.UI.WebControls.Label)
+			DclFld lblLabel   Type(System.Web.UI.WebControls.Label)
+	     
+			DclFld _firstTime Type(*Boolean)
+	    
+			_firstTime = *false
+	    
+			Open  StrapSKU
+  			Setll StrapSKU Key(KyProj)
+			If StrapSKU.isEqual()
+				_firstTime = *true
+			EndIf
+			Close StrapSKU
+        
+			If Not _firstTime 
+				//Check datagrid Init from "Summary.aspx" if item is new for it's location
+				Open FinishedGoods
+				
+				ForEach  Name(item) Collection(dgInit.Items) Type(DataGridItem)
+					If item.ItemType = ListItemType.Item or item.ItemType = ListItemType.AlternatingItem
+                        
+						lblMfgLoc  = item.FindControl("lblMFGLOC")  *as Label
+						lblProduct = item.FindControl("lblProduct")  *as Label
+						lblLabel   = item.FindControl("lblLabel")    *as Label 
+            
+						Move lblMfgLoc.Text.Trim()  KeyLocn
+						Move lblProduct.Text.Trim() KeyProduct
+						Move lblLabel.Text.Trim()   KeyLabel
+             
+						Setll FinishedGoods Key(KyLablProdLoc) 
+						If Not FinishedGoods.isEqual()
+							_firstTime = *True
+							Leave
+						EndIf 
+         
+					EndIf
+            
+				EndFor    
+        
+				Close FinishedGoods
+				
+			EndIf
+        
+			LeaveSr (_firstTime)
+		EndGet
+	EndProp
+	
+	// Check if it is Last approver and there is new product/label must be replaced
+	BegFunc showSKUInfo Type(*Char) Len(2) Access(*Public)
+	    
+	    DclFld _showSKUInfo		Type(*Boolean)
+	    DclFld _category		Type(*Char)	Len(2)
+	    DclFld ErrorText		Type(*String)
+	    
+	    _showSKUInfo = *false
+	    _category = *blanks
+	    
+	    Try
+	    Open  StrapProj
+	    Catch ex	Type(Exception)
+			Errortext = ex.ToString()
+	    Endtry
+
+		Try
+	    Open  StrapLoc
+	    Catch ex	Type(Exception)
+			Errortext = ex.ToString()
+	    Endtry
+	    
+		Try				
+	    Open  StrapApproval
+	    Catch ex	Type(Exception)
+			Errortext = ex.ToString()
+	    Endtry
+	    
+	    Try
+	    Open  SKUFileB
+	    Catch ex	Type(Exception)
+	    	Errortext = ex.ToString()
+	    Endtry
+	    
+		//Filename: CBLPROJZ
+		Chain StrapProj Key(KyProj) Access(*Nolock)
+		If StrapProj.IsFound()
+			If KeyCategory = *blanks
+				KeyCategory = PJ_CATEG
+			Endif
+		    _Category = PJ_CATEG	
+			
+			//Filename: CBLAPPRB
+			Chain StrapApproval Key(KyApproval)
+			If StrapApproval.IsFound() and AP_PREFIX = "A" // last approval
+	        
+				If KeyCategory = "NP" 
+					If PJ_BASPRD = *Zeros
+						_showSKUInfo = *true
+						_Category = KeyCategory
+					Else
+						KeyProduct = PJ_BASPRD
+						KeyLabel = PJ_LABEL
+						Chain SKUFileB	Key(KyProdLbl)
+						If not SKUFileB.IsFound()
+							_showSKUInfo = *true
+							_Category = KeyCategory
+						Endif
+					Endif
+				Else 
+					// For "FT" and "NL", setup is in CBLLOCMD
+					//Filename: CBLLOCMD
+					Setll StrapLoc Key(KyProj)
+					ReadE StrapLoc Key(KyProj)
+					DoWhile Not StrapLoc.isEOF()
+						
+						if KeyCategory = "NL"
+							Move	PJ_BASPRD	KeyProduct
+						Else
+							Try
+								Movel	LM_NWPRDLB	KeyProduct
+							Catch ex	Type(Exception)
+								KeyProduct = *zeros
+							EndTry
+						Endif
+						Move	LM_NWPRDLB.Trim()	KeyLabel
+						Chain SKUFileB	Key(KyProdLbl)
+						If not SKUFileB.IsFound()
+							_showSKUInfo = *true
+							_Category = KeyCategory
+							Leave
+						Endif
+
+						ReadE StrapLoc Key(KyProj)
+					EndDo
+				Endif
+			EndIf 
+        EndIF    
+        
+        Try
+        Close StrapProj
+        Catch ex Type(Exception)
+        	Errortext = ex.ToString()
+        Endtry
+
+		Try
+        Close StrapLoc
+        Catch ex Type(Exception)
+        	Errortext = ex.ToString()
+        Endtry
+
+		Try
+        Close StrapApproval
+	    Catch ex	Type(Exception)
+	    	Errortext = ex.ToString()
+	    Endtry
+        
+		Try        
+        Close SKUFileB
+        Catch ex Type(Exception)
+        	Errortext = ex.ToString()
+        Endtry
+        
+        //LeaveSr _showSKUInfo
+        LeaveSr	_Category
+	EndFunc
+	
+		// Check if it is Last approver and there is new product/label must be replaced
+	BegFunc showSKUInfoIndexButton Type(*Boolean) Access(*Public)
+	    
+	    DclFld _showSKUInfo Type(*Boolean)
+	    
+	    _showSKUInfo = *false
+        
+        Try
+	    Open  StrapApproval
+
+	    Chain StrapApproval Key(KeyUserID)
+	    If StrapApproval.IsFound()
+	       If AP_PREFIX = "A" // last approval
+              _showSKUInfo = *true
+           EndIf
+        EndIF    
+              
+        Close StrapApproval
+        Catch ex Type(Exception)
+        EndTry
+        
+        LeaveSr _showSKUInfo
+	    
+	EndFunc
+	
+	BegSr writeEmailLog Access(*Public) 
+	 DclSrParm pTo       Type(*String)
+	 DclSrParm pSubject  Type(*String)
+	 
+	 DclFld TimeDate     Type(*zoned) Len(14,0)
+	 DclFld Time         Type(*TimeStamp)
+	 
+	 Time Time 
+	 MoveL Time TimeDate 
+	 
+	  Open PCFEMAL
+	   
+	   Clear PCREMAL 
+	     
+	     If *This.UserID = *Nothing
+	     E_USER = GlobalRoutine.getUserID().toUpper()
+	     Else
+	     E_USER = *This.UserID
+	     EndIf
+	     
+	     Movel TimeDATE E_DATE
+	     Move  TimeDate E_TIME
+	     E_PGM  = "STRAP" 
+	     E_TYPE = "*PDF"
+	     E_ADDR = pTO 
+	     E_SBJ  = pSubject       
+	      
+	   Write PCREMAL 
+	  
+	  Close PCFEMAL 
+	 
+	EndSr 
+	
+	BegFunc	GetCustomer	Type(*String)	Access(*Public)
+		DclFld CustomerName Type(*String)
+		
+		CustomerName = *blanks
+		Open	CBFCUST
+		Open	CBWCUST
+		
+		Chain	CBWCUST	Key(KyProj)
+		If CBWCUST.IsFound()
+			If CS_ONAME <> *blanks
+				CustomerName = CS_ONAME
+			else
+				CustomerName = CS_DIST
+			Endif		
+		Else
+			Chain	CBFCUST	Key(KyProj)
+			If CBFCUST.IsFound()
+				If CS_ONAME <> *blanks
+					CustomerName = CS_ONAME
+				else
+					CustomerName = CS_DIST
+				Endif		
+			Endif
+		Endif
+				
+		If CustomerName = *blanks
+			Open NotesFile
+			// Just getting the 1st record on the notes file because this will be 
+			// part of a subject line
+			KeyType = "Q"
+			Setll	NotesFile		Key( KyProjType ) 
+			Reade	NotesFile		Key( KyProjType )	Access( *NOLOCK )
+			If	( not NotesFile.IsEof )
+				CustomerName = NT_NOTES.Trim()
+			Endif
+		
+			Close NotesFile
+		Endif
+		Close	CBFCUST
+		Close	CBWCUST
+		Leavesr	CustomerName
+	EndFunc
+		
+//	BegFunc	MessageBody	Type(System.Text.StringBuilder) Access(*Public)
+//		DclFld msgbld       Type(System.text.StringBuilder)
+//		DclFld _Product     Type(*Zoned)	Len(5,0)
+//		DclFld _Label		Type(*Char)		Len(3)
+//		
+//		
+//  			msgbld = *New System.text.StringBuilder()		
+//			
+//			Open StrapProj
+//			Open StrapLoc
+//			// load existing New Product/New Label info for view
+//			Setll StrapLoc Key(KyProj)
+//			ReadE StrapLoc Key(KyProj) Access(*Nolock)
+//			DoWhile Not StrapLoc.IsEOF 
+//				msgbld.Append(Environment.NewLine)
+//				Select
+//				When LM_NEWPRD <> *blanks and LM_NEWLBL <> *blanks
+//					msgbld.Append(String.Format("<br>New Product/Label: {0} {1}", LM_NEWPRD.Trim(), LM_NEWLBL.Trim()))
+//				When LM_NEWPRD <> *blanks
+//					msgbld.Append(String.Format("<br>New Product: {0}", LM_NEWPRD.Trim()))
+//				When LM_NEWLBL <> *blanks
+//					_Product = *zeros
+//					Chain StrapProj Key(KyProj)
+//					If StrapProj.IsFound()
+//						_Product = PJ_BASPRD
+//					Endif
+//					ReadSkuFile(_Product.ToString(), *blanks)
+//					msgbld.Append(String.Format("<br>Product: {0}-{1} with New Label: {2}", _Product, *this.getDesc(), LM_NEWLBL.Trim()))
+//				Other
+//					Try
+//						Movel	LM_NWPRDLB	_Product
+//						Move	LM_NWPRDLB.Trim()	_Label
+//					Catch	ex	Type(Exception)
+//						_Product = *zeros
+//						_Label = *blanks
+//					EndTry
+//					ReadSkuFile(_Product.ToString(), _LABEL.Trim())
+//					ReadLabel(_LABEL.Trim())
+//   					msgbld.Append(String.Format("<br>{0}-{1} Description: {2}", _Product.toString(), _LABEL.toString(), *this.getDesc())) 
+//   				EndSl
+//				ReadE StrapLoc Key(KyProj) Access(*Nolock)
+//			EndDo 
+//         
+//			Close StrapLoc
+//			Close StrapProj		
+//
+//		Leavesr msgbld
+//	EndFunc
+	
+	BegFunc MessageBody	Type(System.Text.StringBuilder) Access(*Public)
+	   DclSrParm _onlyFirstProduct Type(*boolean)
+	
+		DclFld LM_NWPRDLB2 Like(LM_NWPRDLB) 
+		DclFld items       Type( System.Collections.ArrayList ) New()
+	    DclFld msgbld System.text.StringBuilder
+	    
+   		// 01/15/07 BH -- Fix
+		//		Do not skip a line when listing products
+		
+	    msgbld = *New System.text.StringBuilder() 	
+      
+        Open StrapProj      
+        open SkuFile
+        Open StrapLoc                
+       
+        items.Clear()	 
+  
+		  
+		  // Building Product Information	
+		  Chain StrapProj Key(KyProj) Access(*NoLock)
+		  If StrapProj.IsFound() and PJ_BASPRD <> *Zeros and PJ_LABEL <> *Blanks
+		     Clear SK_SKUDSC
+		     KeyProduct = PJ_BASPRD 
+		     KeyLabel  = PJ_LABEL 
+		     Chain SkuFile Key(KyProdLbl) Access(*NoLock)
+		     
+		     msgbld.Append("Product " + PJ_BASPRD.toString().Trim() + PJ_LABEL + " ")
+		     msgbld.Append(SK_SKUDSC.toString().Trim() +  " ")
+		     
+		     LM_NWPRDLB2 = PJ_BASPRD.toString().Trim() + PJ_LABEL
+		     items.Add(LM_NWPRDLB2)	
+		     Clear LM_NWPRDLB2
+		     If _onlyFirstproduct = *False	
+			 	msgbld.Append("<br>")
+			 Endif	     
+		     
+		  EndIF 
+			  
+		  Setll StrapLoc Key(KyProj)
+		  ReadE StrapLoc Key(KyProj) Access(*NoLock)
+		  DoWhile Not Straploc.IsEoF()
+		     
+		     If _onlyFirstproduct = *True and msgbld.ToString() <> *Blanks
+		        Leave 
+		     EndIf 
+		     
+		     try
+             If LM_NWPRDLB <> *Blanks
+                Select 
+				When LM_NWPRDLB.toString().Substring(4,1) <> *Blanks and Not items.Contains(LM_NWPRDLB)
+
+					msgbld.Append("Product " + LM_NWPRDLB + " ")
+					If LM_NWPRDLB.toString().IndexOf("NEW") >= *Zeros
+						msgbld.Append(" ")
+					Else
+						Clear SK_SKUDSC
+						MoveL LM_NWPRDLB KeyProduct
+						KeyLabel  = LM_NWPRDLB.toString().substring(5,3)
+						Chain SkuFile Key(KyProdLbl) Access(*NoLock)  
+						msgbld.Append(SK_SKUDSC.toString().Trim() +  " ")
+					EndIf
+		         
+					LM_NWPRDLB2 = LM_NWPRDLB
+					items.Add(LM_NWPRDLB2)	
+					Clear LM_NWPRDLB2
+					If _onlyFirstproduct = *False	
+						msgbld.Append("<br>")
+					Endif
+						       
+				When LM_NWPRDLB.toString().Substring(4,1) = *Blanks and PJ_BASPRD <> *Zeros 
+		       
+					LM_NWPRDLB2 = PJ_BASPRD.toString().Trim() + LM_NWPRDLB.toString().Trim()
+					If Not items.Contains(LM_NWPRDLB2)
+			               
+						Clear SK_SKUDSC
+						Move LM_NWPRDLB.toString().substring(0,3) KeyLabel
+						KeyProduct = PJ_BASPRD 
+						Chain SkuFile Key(KyProdLbl) Access(*NoLock)
+						msgbld.Append("Product " + PJ_BASPRD.toString().Trim() + LM_NWPRDLB.toString().Trim() + " ")
+						msgbld.Append(SK_SKUDSC.toString().Trim() +  " ")
+		        
+						items.Add(LM_NWPRDLB2)	
+						Clear LM_NWPRDLB2	  
+						If _onlyFirstproduct = *False	
+							msgbld.Append("<br>")		
+						Endif
+					EndIf	
+		        
+				When LM_NWPRDLB <> *Blanks and PJ_BASPRD = *Zeros 
+		       
+					LM_NWPRDLB2 = LM_NWPRDLB.toString().Trim()
+					If Not items.Contains(LM_NWPRDLB2)
+						msgbld.Append("Product " + LM_NWPRDLB.toString().Trim() + " ")
+		        
+						items.Add(LM_NWPRDLB2)	
+						Clear LM_NWPRDLB2	  
+						If _onlyFirstproduct = *False	
+							msgbld.Append("<br>")     
+						Endif
+					EndIf		      	       
+		       
+				EndSl 
+		        
+		     EndIf	
+		     
+		     Catch ex Type(Exception)
+		     DclFld x *String
+		     x = ex.InnerException.InnerException.Message
+		     EndTry 	   
+		      
+		  ReadE StrapLoc Key(KyProj) Access(*NoLock)
+		  EndDo 
+		
+		Close StrapLoc
+		Close SkuFile
+	    Close StrapProj
+	    	     
+	    LeaveSr Value (msgbld) 
+	EndFunc 
+
+//	BegFunc getEmail Type(*String) Access(*Public)
+//		DclSrParm	pUserID	Type( *Char )	Len( 10 )
+//
+//		DclFld	EmailAddress	Type( *String )
+//		
+//		Open SecurityHdr
+//		Open CSLXCPT6
+//		
+//		Clear SYJDESC
+//		Chain SYLSECHA Key( pUserID ) Access(*NoLock)
+//	    If SYJDESC <> *Blanks
+//			EmailAddress = SYJDESC
+//	  	Else
+//	  		Chain CSLXCPT6 Key("HELPDESK") Access(*NoLock)
+//	  		If CSLXCPT6.IsFound() and EXCVAL <> *blanks
+//	  			EmailAddress = EXCVAL.Trim()
+//	  		Else
+//				EmailAddress = "HELPDESK@VENTURAFOODS.COM"
+//			Endif
+//		Endif
+//	
+//		Close SecurityHdr
+//		Close CSLXCPT6
+//		
+//		LeaveSr EmailAddress  
+//	EndFunc    
+
+	BegSr ReleaseProj Access( *Public )
+		Open StrapProj
+		Chain StrapProj Key(KyProj)
+		If StrapProj.IsFound
+			PJ_INUSE = *blanks
+			PJ_INUSEBY = *blanks
+			Update PROJ
+		EndIf
+		CLOSE StrapProj
+	Endsr
+	
+ 	BegConstructor Access(*Public)
+	     DclSrParm _project *String
+	     DclSrParm _category *String	     	     
+	   	     
+	   	 LabelProjectID = _project.Trim()
+	     Keyseq#     = ProjectID.getSeq#( _project )
+	     KeyProject# = ProjectID.getProject#( _project )
+	     KeyCategory = _category
+	     KeyUserID   = GlobalRoutine.getUserID().toUpper()
+	   
+	EndConstructor
+//	
+//	BegConstructor Access(*Public)
+//	     DclSrParm _project Type(*String)	     
+//	     //DclSrParm _pgmDB   Type(ASNA.VisualRPG.Runtime.Database)
+//	      
+//		 Keyseq#     = ProjectID.getSeq#( _project )
+//	     KeyProject# = ProjectID.getProject#( _project )
+//	     KeyUserID   = GlobalRoutine.getUserID().toUpper()
+//	     
+////	     Try
+////         *this.pgmDB = _pgmDB     
+////         If not StrapProj.IsOpen()
+////			Open StrapProj
+////		 Endif
+////	     Chain StrapProj Key(KyProj)
+////	     If StrapProj.IsFound()
+////	      KeyCategory = PJ_CATEG
+////	     EndIf
+////		 Close StrapProj
+////		 Catch ex Type(Exception)
+////		 Endtry	 
+//		   
+//	EndConstructor
+//	
+//	BegConstructor Access(*Public)	    
+//	    KeyUserID   = GlobalRoutine.getUserID().toUpper()	 
+//	EndConstructor
+
+EndClass
