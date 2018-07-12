@@ -33,4 +33,4 @@
 Detailed information for using the helpers and the mandatory steps that should be taken is available in the following help topic:
 https://docs.telerik.com/aspnet-core/getting-started/getting-started
 
-4. reCapture https://dejanstojanovic.net/aspnet/2018/may/using-google-recaptcha-v2-in-aspnet-core-web-application/ 1974
+4. reCapture https://dejanstojanovic.net/aspnet/2018/may/using-google-recaptcha-v2-in-aspnet-core-web-application/
