@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using TMWork.Data.Models;
 using TMWork.Data.Models.Customer;
 using TMWork.Data.Models.Invoice;
 using TMWork.Data.Models.User;
+using TMWork.Data.Models.Team;
 
 namespace TMWork.Data.Repos
 {
@@ -44,6 +41,27 @@ namespace TMWork.Data.Repos
         void Remove(Contact newContact);
         bool SaveAll();
     }
+    public interface IMemberRepository
+    {
+        IEnumerable<Member> GetAll();
+        Member FindById(int Id);
+        Member FindByName(string Name);
+        void Add(Member newMember);
+        void Update(Member newMember);
+        void Remove(Member newMember);
+        bool SaveAll();
+    }
+    public interface IMissionRepository
+    {
+        IEnumerable<Mission> GetAll();
+        Mission FindById(int Id);
+        Mission FindByName(string Name);
+        void Add(Mission newMission);
+        void Update(Mission newMisison);
+        void Remove(Mission newMission);
+        bool SaveAll();
+    }
+
     public interface ICustomerRepository 
     {
         IEnumerable<Customer> GetAll();

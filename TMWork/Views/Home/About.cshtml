@@ -1,18 +1,71 @@
-﻿@{
+﻿@model TMWork.Data.Models.Team.Member
+@using TMWork.ViewModels.Home
+@using TMWork.Data.Models.Customer
+@using Microsoft.Extensions.Configuration;
+
+@inject IConfiguration configuration;
+
+@{
     ViewData["Title"] = "About";
 }
-<div class="col-md-4">
-    <form>
-        <legend><span class="glyphicon glyphicon-globe"></span> Our office</legend>
-        <address>
-            <strong>ATapplianceServiceInc</strong><br />
-            12664 Chapman Ave. #1113<br />
-            Garden Grove, CA 92840<br />
-            <abbr title="Phone">P:</abbr>
-            (714)234-6070
-        </address>
-        @*<address>
-                <a href="mailto:andyhammer@gmail.com">andyhammer@gmail.com</a><br />
-            </address>*@
-    </form>
+<div class="col-lg-12">
+
+    @using (Html.BeginForm())
+    {
+        <div class="col-lg-12">
+            <h3>Our Mission</h3>
+            <div class="btn-toolbar">
+                <a asp-controller="Home" asp-action="AboutEditOurMission" asp-route-returnurl="@ViewData["ReturnUrl"]" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Edit Our Mission</a>
+            </div>
+            <div>@ViewBag.OurMission</div>
+        </div>
+        <hr />
+
+        <div class="col-lg-12">
+            <div class="btn-toolbar">
+                <a asp-controller="Home" asp-action="AboutEditTeamMember" asp-route-returnurl="@ViewData["ReturnUrl"]" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Add Team Member</a>
+            </div>
+            <center>
+                <script type="text/x-kendo-tmpl" id="memberListViewTemplate">
+                    <div class="col-sm-5" style="padding-top:1em; ">
+                        <h3 class="group inner list-group-item-heading">
+                            ${Name}
+                        </h3>
+                        <div class="caption">
+                            <p class="group inner list-group-item-text">
+                                ${Description}
+                            </p>
+                        </div>
+                        <a href='@Url.Action("AboutEditTeamMember", "Home", new { area = "" })/?memberId=#=MemberId#' class='btn bth-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit</a>
+                        <button class='btn bth-xs btn-danger js-delete' data-id="#=MemberId#" data-name="#=Name#"><i class='glyphicon glyphicon-trash'></i> Delete</button>
+
+                    </div>
+                </script>
+            </center>
+        </div>
+
+        <div class="demo-section k-content wide">
+            @(Html.Kendo().ListView<TMWork.Data.Models.Team.Member>()
+                                .Name("memberListView")
+                                .TagName("div")
+                                .ClientTemplateId("memberListViewTemplate")
+                                .DataSource(dataSource => dataSource
+                                    .Ajax().
+                                    Read(read => read.Action("GetMembers", "Home")
+                                )
+                                .ServerOperation(true)
+                                .PageSize(20)
+                                )
+            )
+        </div>
+        <!--data-id="# =MemberId#" data-name="# =Name#"-->
+    }
+
+
+
+    <div class="col-md-7">
+        <h3>Our Office Location</h3>
+        <iframe src=@configuration.GetSection("SiteSettings")["GoogleMapCoordinates"] width="170%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
 </div>
+

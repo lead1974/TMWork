@@ -11,6 +11,7 @@ using TMWork.Data;
 using TMWork.Data.Models.User;
 using TMWork.Data.Repos;
 using TMWork.Services;
+using TMWork.Data.Models.Team;
 
 namespace TMWork.Data
 {
@@ -46,6 +47,7 @@ namespace TMWork.Data
         public async Task EnsureSeedData()
         {
             await SeedAdminUsers();
+            await SeedTeamMembers();
             await SeedCustomerAndAppliances();
         }
         private async Task SeedAdminUsers()
@@ -78,6 +80,59 @@ namespace TMWork.Data
             }
 
             await _tmContext.SaveChangesAsync();
+        }
+
+        private async Task SeedTeamMembers()
+        {
+            if (!_tmContext.Missions.Any())
+            {
+                var missions = new Mission[] {
+                    new Mission
+                    {
+                        OurMission = @"For our customers:Serving our customers by earning their business each and every day, by delivering products and service beyond their expectation and in the most expeditious manner
+                                       For our employees:
+                                       Providing a safe, professional work environment that offers opportunity, fair compensation, stability and ownership, with advancement and promotions based upon skill, effort, determination and dedication
+                                       For our Company:
+                                       Building and sustaining a strong, profitable and professional organization by embracing the culture of mutual responsibility and attitude of ownership",
+                        DateCreated= DateTime.UtcNow,
+                        DateUpdated= DateTime.UtcNow,
+                        CreatedBy="System",
+                        UpdatedBy=""
+
+                    }
+                };
+                _tmContext.Missions.AddRange(missions);
+                await _tmContext.SaveChangesAsync();
+            };
+
+            if (!_tmContext.Members.Any())
+            {
+                var members = new Member[] {
+                new Member
+                {
+                    Name = "Timur Alayev",
+                    Description = "Timur Alayev is experienced handy man",
+                    DateCreated= DateTime.UtcNow,
+                    DateUpdated= DateTime.UtcNow,
+                    CreatedBy="System",
+                    UpdatedBy=""
+
+                },
+                new Member
+                {
+                    Name = "Andrei Dobrivecher",
+                    Description = "Andrei Dobrivecher is very experienced handy man",
+                    DateCreated = DateTime.UtcNow,
+                    DateUpdated = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    UpdatedBy = ""
+
+                },
+            };
+
+                _tmContext.Members.AddRange(members);
+                await _tmContext.SaveChangesAsync();
+            }
         }
 
         private async Task SeedCustomerAndAppliances()

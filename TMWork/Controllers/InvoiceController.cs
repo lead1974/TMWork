@@ -68,6 +68,7 @@ namespace TMWork.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewBag.SelectiveTab = "invoice";
             return View();
         }
         [HttpGet, Route("CreateInvoice")]

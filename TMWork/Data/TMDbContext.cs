@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using TMWork.Data.Models.User;
 using TMWork.Data.Models.Customer;
 using TMWork.Data.Models.Invoice;
+using TMWork.Data.Models.Team;
 
 namespace TMWork.Data
 {
     public class TMDbContext : IdentityDbContext<AuthUser,AuthRole,string>
     {
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Mission> Missions { get; set; }
+        public DbSet<Member> Members { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerApplianceProblem> CustomerApplianceProblems { get; set; }
         public DbSet<CustomerApplianceType> CustomerApplianceTypes { get; set; }

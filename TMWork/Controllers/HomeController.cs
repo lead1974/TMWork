@@ -22,6 +22,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using TMWork.Data.Models.Customer;
 using AutoMapper;
+using TMWork.Data.Models.Team;
 
 namespace TMWork.Controllers
 {
@@ -38,11 +39,15 @@ namespace TMWork.Controllers
         private TMDbContext _TMDbContext;
         private ICustomerCouponRepository _customerCouponRepo;
         private IContactRepository _contactRepo;
+        private IMissionRepository _missionRepo;
+        private IMemberRepository _memberRepo;
 
         public HomeController(
             TMDbContext dbContext,
             ICustomerCouponRepository customerCouponRepo,
             IContactRepository contactRepo,
+            IMissionRepository missionRepo,
+            IMemberRepository memberRepo,
             UserManager<AuthUser> userManager,
             SignInManager<AuthUser> signInManager,
             RoleManager<AuthRole> roleManager,
@@ -55,6 +60,8 @@ namespace TMWork.Controllers
             _TMDbContext = dbContext;
             _customerCouponRepo = customerCouponRepo;
             _contactRepo = contactRepo;
+            _missionRepo = missionRepo;
+            _memberRepo = memberRepo;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -75,14 +82,38 @@ namespace TMWork.Controllers
 
             return View();
         }
+        #region About
         [SelectedTabFilter("about")]
         public IActionResult About()
         {
+            var mission = _missionRepo.GetAll().ToList().FirstOrDefault();
+            ViewBag.OurMission = mission.OurMission;
             ViewBag.SelectiveTab = "about";
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
+        [HttpGet, Route("AboutEditOurMission")]
+        public IActionResult AboutEditOurMission()
+        {
+            ViewBag.SelectiveTab = "about";
+            return View("AboutEditOurMission", new Mission());
+        }
+        [HttpGet, Route("AboutEditTeamMember")]
+        public IActionResult AboutEditTeamMember()
+        {
+            ViewBag.SelectiveTab = "about";
+            return View("AboutEditTeamMember", new Member());
+        }
+        //Get Members 
+        public IActionResult GetMembers([DataSourceRequest] DataSourceRequest request)
+        {
+            var members = _memberRepo.GetAll().ToList();
+            return Json(members.ToDataSourceResult(request));
+        }
+        #endregion
+
+        #region Contact
         [SelectedTabFilter("contact")]
         public IActionResult Contact()
         {
@@ -189,11 +220,28 @@ namespace TMWork.Controllers
             var customerCoupons = _customerCouponRepo.GetAllNonExpired().ToList();
             return Json(customerCoupons.ToDataSourceResult(request));
         }
-        
+        #endregion
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        private string GetOurMissionText()
+        {
+
+            string ourMission = string.Empty;
+
+            var pathToFile = _env.WebRootPath
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "templates"
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "TextFiles"
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "OurMission.html";
+
+            ourMission = System.IO.File.ReadAllText(pathToFile);
+            return ourMission;        }
 
         private string createEmailBody(Contact model)
         {

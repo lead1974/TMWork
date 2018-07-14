@@ -11,9 +11,10 @@ using TMWork.Data;
 namespace TMWork.Migrations
 {
     [DbContext(typeof(TMDbContext))]
-    partial class TMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180714015110_ourmission")]
+    partial class ourmission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

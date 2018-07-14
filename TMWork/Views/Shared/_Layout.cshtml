@@ -51,7 +51,7 @@
                     @*<li class="@(ViewBag.SelectiveTab =="scheduleappointment"?"active":"")"><a href="@Url.Action("index","scheduleappointment", new { area = "" })"><i class="fa fa-pencil"></i> Schedule Appointment</a></li>*@
                     <li class="@(ViewBag.SelectiveTab =="contact"?"active":"")"><a href="@Url.Action("contact","home", new { area = "" })"><i class="fa fa-phone"></i> Contact</a></li>
                     <li class="@(ViewBag.SelectiveTab =="about"?"active":"")"><a href="@Url.Action("about","home", new { area = "" })"><i class="fa fa-user-plus"></i> About</a></li>
-                    <li class="@(ViewBag.SelectiveTab =="about"?"active":"")"><a href="@Url.Action("index","invoice", new { area = "" })"><i class="fa fa-user-plus"></i> Invoices</a></li>
+                    <li class="@(ViewBag.SelectiveTab =="invoice"?"active":"")"><a href="@Url.Action("index","invoice", new { area = "" })"><i class="fa fa-user-plus"></i> Invoices</a></li>
 
                     @if (User.IsInRole(RoleName.CanManageSite))
     {
@@ -67,7 +67,7 @@
         @RenderBody()
         <hr />
         <br/>
-        <footer>
+        <footer style="padding-top:50%">
             <p>&copy; @DateTime.Now.Year - @configuration.GetSection("SiteSettings")["SiteDomain"]</p>
         </footer>
     </div>

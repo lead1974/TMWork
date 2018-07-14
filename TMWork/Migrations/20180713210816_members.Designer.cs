@@ -11,9 +11,10 @@ using TMWork.Data;
 namespace TMWork.Migrations
 {
     [DbContext(typeof(TMDbContext))]
-    partial class TMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180713210816_members")]
+    partial class members
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -421,27 +422,6 @@ namespace TMWork.Migrations
                     b.HasKey("MemberId");
 
                     b.ToTable("Members");
-                });
-
-            modelBuilder.Entity("TMWork.Data.Models.Team.Mission", b =>
-                {
-                    b.Property<int>("MissionId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<DateTime?>("DateUpdated");
-
-                    b.Property<string>("OurMission")
-                        .IsRequired();
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.HasKey("MissionId");
-
-                    b.ToTable("Missions");
                 });
 
             modelBuilder.Entity("TMWork.Data.Models.User.AuthRole", b =>

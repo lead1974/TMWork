@@ -79,6 +79,8 @@ namespace TMWork
             services.AddTransient<ISmsService, MailService>();
             services.AddTransient<GlobalService, GlobalService>();
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IMissionRepository, MissionRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerApplianceTypeRepository, CustomerApplianceTypeRepository>();
             services.AddScoped<ICustomerApplianceBrandRepository, CustomerApplianceBrandRepository>();
