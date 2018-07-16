@@ -91,6 +91,10 @@ namespace TMWork.Controllers
             ViewBag.SelectiveTab = "about";
             ViewData["Message"] = "Your application description page.";
 
+            //Get Team Members
+            var members = _memberRepo.GetAll().ToList();
+            ViewBag.Members = members;
+
             return View();
         }
         [HttpGet, Route("AboutEditOurMission")]
@@ -111,6 +115,24 @@ namespace TMWork.Controllers
             var members = _memberRepo.GetAll().ToList();
             return Json(members.ToDataSourceResult(request));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTeamMemberAsync(int memberId)
+        {
+            string emailSubj = string.Empty;
+            if (memberId > 0)
+            {
+                var member = _memberRepo.FindById(memberId);
+                _memberRepo.Remove(member);
+                _memberRepo.SaveAll();
+                emailSubj = string.Format("Member {0}, Member number {1} has been removed by {2} on {3}", member.Name, member.MemberId, User.Identity.Name, DateTime.UtcNow);
+                string body = this.createEmailBody_Member(member, emailSubj);
+                await _emailSender.SendEmailAsync("", emailSubj, body);
+            }
+
+            return RedirectToAction("About", "Home", new { area = "" });
+        }
+
         #endregion
 
         #region Contact
@@ -144,7 +166,7 @@ namespace TMWork.Controllers
                 //    ModelState.AddModelError("", "We don't support AOL addresses");
                 //}
                     var contact = Mapper.Map<ContactViewModel,Contact>(model);
-                    string body = this.createEmailBody(contact); 
+                    string body = this.createEmailBody_Contact(contact); 
                     await _emailSender.SendEmailAsync("", "from Contact page", body);
                     ModelState.Clear(); // Clear the form
                     ViewBag.UserMessage = string.Format("Dear {0},{1} We appreciate you contacting us.{1} One of our colleagues will get back to you shortly.",model.Name,"\n"); //Notify Users
@@ -243,7 +265,7 @@ namespace TMWork.Controllers
             ourMission = System.IO.File.ReadAllText(pathToFile);
             return ourMission;        }
 
-        private string createEmailBody(Contact model)
+        private string createEmailBody_Contact(Contact model)
         {
 
             string body = string.Empty;
@@ -263,7 +285,26 @@ namespace TMWork.Controllers
             body = body.Replace("{Email}", model.Email);
             body = body.Replace("{Message}", model.Message);
             return body;
+        }
+        private string createEmailBody_Member(Member model,string subj)
+        {
 
+            string body = string.Empty;
+
+            var pathToFile = _env.WebRootPath
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "templates"
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "EmailTemplate"
+                    + Path.DirectorySeparatorChar.ToString()
+                    + "Member.html";
+
+            body = System.IO.File.ReadAllText(pathToFile);
+
+            body = body.Replace("{Name}", model.Name); //replacing the required things  
+            body = body.Replace("{Id}", model.MemberId.ToString());
+            body = body.Replace("{Message}", subj);
+            return body;
         }
     }
 }
