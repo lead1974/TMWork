@@ -16,13 +16,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @configuration.GetSection("SiteSettings")["SiteName"]</title>
 
+    <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.common-bootstrap.core.min.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.default.mobile.min.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+
 
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="~/lib/kendo-ui/js/jquery.min.js"></script>
@@ -51,13 +52,17 @@
                     @*<li class="@(ViewBag.SelectiveTab =="scheduleappointment"?"active":"")"><a href="@Url.Action("index","scheduleappointment", new { area = "" })"><i class="fa fa-pencil"></i> Schedule Appointment</a></li>*@
                     <li class="@(ViewBag.SelectiveTab =="contact"?"active":"")"><a href="@Url.Action("contact","home", new { area = "" })"><i class="fa fa-phone"></i> Contact</a></li>
                     <li class="@(ViewBag.SelectiveTab =="about"?"active":"")"><a href="@Url.Action("about","home", new { area = "" })"><i class="fa fa-user-plus"></i> About</a></li>
-                    <li class="@(ViewBag.SelectiveTab =="invoice"?"active":"")"><a href="@Url.Action("index","invoice", new { area = "" })"><i class="fa fa-user-plus"></i> Invoices</a></li>
 
+
+                    @if (User.IsInRole(RoleName.CanManageSite) || User.IsInRole(RoleName.CanManageInvoices))
+                    {
+                        <li class="@(ViewBag.SelectiveTab =="invoice"?"active":"")"><a href="@Url.Action("index","invoice", new { area = "" })"><i class="fa fa-user-plus"></i> Invoices</a></li>
+                    }
                     @if (User.IsInRole(RoleName.CanManageSite))
-    {
-                <li><a href="@Url.Action("Index", "Invoice", new { area = "admin" })"><i class="fa fa-gear"></i> Admin</a></li>
-}
-                </ul>
+                    {
+                        <li><a href="@Url.Action("CouponIndex", "CustomerCoupon", new { area = "admin" })"><i class="fa fa-gear"></i> Admin</a></li>
+                    }
+                    </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>

@@ -70,6 +70,11 @@ namespace TMWork.Data
                 await roleStore.CreateAsync(new AuthRole { Name = RoleName.CanManageSite, NormalizedName = RoleName.CanManageSite, Description = "Site Administrator" });
             }
 
+            if (!_tmContext.Roles.Any(r => r.Name == RoleName.CanManageInvoices))
+            {
+                await roleStore.CreateAsync(new AuthRole { Name = RoleName.CanManageInvoices, NormalizedName = RoleName.CanManageInvoices, Description = "Can Manage Invoices" });
+            }
+
             if (!_tmContext.Users.Any(u => u.UserName == user.UserName))
             {
                 var password = new PasswordHasher<AuthUser>();

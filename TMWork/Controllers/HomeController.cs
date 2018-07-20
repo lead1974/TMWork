@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Hosting;
 using TMWork.Data.Models.Customer;
 using AutoMapper;
 using TMWork.Data.Models.Team;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace TMWork.Controllers
 {
@@ -41,6 +43,9 @@ namespace TMWork.Controllers
         private IContactRepository _contactRepo;
         private IMissionRepository _missionRepo;
         private IMemberRepository _memberRepo;
+
+        [BindProperty]
+        public IFormFile Image { get; set; }
 
         public HomeController(
             TMDbContext dbContext,
@@ -87,27 +92,121 @@ namespace TMWork.Controllers
         public IActionResult About()
         {
             var mission = _missionRepo.GetAll().ToList().FirstOrDefault();
-            ViewBag.OurMission = mission.OurMission;
+            ViewBag.OurMission = HttpUtility.HtmlDecode(mission.OurMission);
             ViewBag.SelectiveTab = "about";
             ViewData["Message"] = "Your application description page.";
 
             //Get Team Members
             var members = _memberRepo.GetAll().ToList();
+            foreach(var m in members)
+            {
+                m.Description = HttpUtility.HtmlDecode(m.Description);
+            }
             ViewBag.Members = members;
 
             return View();
         }
+
+        #region OurMission
         [HttpGet, Route("AboutEditOurMission")]
         public IActionResult AboutEditOurMission()
         {
+            var mission = _missionRepo.GetAll().ToList().FirstOrDefault();
+            mission.OurMission = HttpUtility.HtmlDecode(mission.OurMission);
             ViewBag.SelectiveTab = "about";
-            return View("AboutEditOurMission", new Mission());
+            return View("AboutEditOurMission", mission);
         }
-        [HttpGet, Route("AboutEditTeamMember")]
-        public IActionResult AboutEditTeamMember()
+        [HttpPost, Route("AboutEditOurMission")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AboutEditOurMission(Mission model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var emailSubj = string.Empty;
+            if (model.MissionId == 0)
+            {
+                model.CreatedBy = User.Identity.Name;
+                model.DateCreated = DateTime.UtcNow;
+
+                _missionRepo.Add(model);
+                _missionRepo.SaveAll();
+            }
+            else
+            {
+                model.UpdatedBy = User.Identity.Name;
+                model.DateUpdated = DateTime.UtcNow;
+
+                _missionRepo.Update(model);
+                _missionRepo.SaveAll();
+            }
+
+            return RedirectToAction("About", "Home");
+        }
+        #endregion
+
+        #region TeamMembers
+        [HttpGet, Route("AboutGetTeamMember/{memberId?}")]
+        public IActionResult AboutGetTeamMember(int memberId)
         {
             ViewBag.SelectiveTab = "about";
+            
+            if (memberId > 0)
+            {
+                var member = _memberRepo.FindById(memberId);
+                member.Description = HttpUtility.HtmlDecode(member.Description);
+                return View("AboutEditTeamMember", member);
+            }
             return View("AboutEditTeamMember", new Member());
+        }
+
+        [HttpPost, Route("AboutEditTeamMember")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AboutEditTeamMember(Member model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            if (Image != null)
+            {
+                using (var stream = new System.IO.MemoryStream())
+                {
+                    Image.CopyTo(stream);
+                    model.Image = stream.ToArray();
+                    model.ImageContentType = Image.ContentType;
+                }
+            }
+            else 
+            {
+                var m = _memberRepo.FindById(model.MemberId);
+                model.Image = m.Image;
+                model.ImageContentType = m.ImageContentType;
+            }
+            
+
+            model.Name = model.Name.Trim();
+            var emailSubj = string.Empty;
+            if (model.MemberId == 0)
+            {
+                model.CreatedBy = User.Identity.Name;
+                model.DateCreated = DateTime.UtcNow;
+
+                _memberRepo.Add(model);
+            }
+            else
+            {
+                model.UpdatedBy = User.Identity.Name;
+                model.DateUpdated = DateTime.UtcNow;
+
+                _memberRepo.Update(model);                
+            }
+
+            _memberRepo.SaveAll();
+            return RedirectToAction("About", "Home");
         }
         //Get Members 
         public IActionResult GetMembers([DataSourceRequest] DataSourceRequest request)
@@ -132,6 +231,7 @@ namespace TMWork.Controllers
 
             return RedirectToAction("About", "Home", new { area = "" });
         }
+        #endregion TeamMember
 
         #endregion
 

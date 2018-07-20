@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ namespace TMWork.Data.Repos
         public Member FindById(int Id)
         {
             return _context.Members
+                           .AsNoTracking()
                            .Where(p => p.MemberId == Id)
                            .FirstOrDefault();
         }
@@ -63,6 +65,7 @@ namespace TMWork.Data.Repos
         public Member FindByName(string Name)
         {
             return _context.Members
+                           .AsNoTracking()
                            .Where(p => p.Name.Contains(Name))
                            .FirstOrDefault();
         }

@@ -13,9 +13,6 @@ namespace TMWork.Data.Models.Team
         [Required]
         public int MemberId { get; set; }
 
-        [Display(Name = "Avatar")]
-        public byte[] Avatar { get; set; }
-
         [Display(Name = "Name")]
         [Required]
         [DataType(DataType.Text)]

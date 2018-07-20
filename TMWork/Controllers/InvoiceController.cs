@@ -27,7 +27,7 @@ namespace TMWork.Controllers
 {
     //[Area("Admin")]
     //[Route("admin/[controller]")]
-    //[Authorize(Roles = RoleName.CanManageSite)]
+    [Authorize(Roles = RoleName.CanManageSite +","+ RoleName.CanManageInvoices)]
     public class InvoiceController : Controller
     {
         private readonly UserManager<AuthUser> _userManager;

@@ -175,7 +175,7 @@
 
                     //            }
                     //        }
-                    //    ]
+                    //    ]                                            //Url.Action("DeleteUser", "User", new { area = "admin" }) + button.attr("data-user-id"),
                     //});
                         $("#grid").on("click", ".js-delete", function () {
                             var button = $(this);
@@ -183,7 +183,7 @@
                                 .confirm("Are you sure you want to delete this user : " + button.attr("data-user-email") + "?", function (result) {
                                     if (result) {
                                         $.ajax({
-                                            url: "/api/user/" + button.attr("data-user-id"),
+                                            url: "/admin/user/" + button.attr("data-user-id"), 
                                             method: "DELETE",
                                             success: function () {
                                                 button.parent().parent().remove();

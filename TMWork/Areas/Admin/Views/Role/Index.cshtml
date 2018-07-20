@@ -22,15 +22,15 @@
       .Name("rolegrid")
       .Columns(columns =>
       {
-          columns.Bound(p => p.Id).ClientTemplate(
-              "<button class='btn bth-xs btn-danger js-delete' data-role-id=#=Id# data-role-name=#=Name#><i class='glyphicon glyphicon-trash'></i> Remove</button>"
-              ).Title("Actions");
+          //columns.Bound(p => p.Id).ClientTemplate(
+          //    "<button class='btn bth-xs btn-danger js-delete' data-role-id=#=Id# data-role-name=#=Name#><i class='glyphicon glyphicon-trash'></i> Remove</button>"
+          //    ).Title("Actions");
           columns.Bound(p => p.Name);
           columns.Bound(p => p.Description);
           columns.Command(command =>
           {
               command.Edit();
-              command.Destroy();
+              command.Destroy().Text("Remove All Users");
           });
       })
       .ToolBar(tools =>
@@ -69,7 +69,7 @@
                     .confirm("Are you sure you want to remove this role : " + button.attr("data-role-name") + "? It will remove this Role from all users assigned to this Role!!!", function (result) {
                         if (result) {
                             $.ajax({
-                                url: "/api/role/" + button.attr("data-role-id"),
+                                url: "/admin/role/" + button.attr("data-role-id"),
                                 method: "DELETE",
                                 success: function () {
                                     button.parent().parent().remove();

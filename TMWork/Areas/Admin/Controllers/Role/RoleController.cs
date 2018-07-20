@@ -111,7 +111,7 @@ namespace TMWork.Areas.Admin.Controllers.Role
         }
 
         // REMOVE api/values/5
-        [HttpDelete, Route("remove")]
+        [HttpPost, Route("remove")]
         public async Task<IActionResult> EditingPopup_Destroy([DataSourceRequest] DataSourceRequest request, RoleEdit theRole)
         {
             if (ModelState.IsValid)
@@ -121,18 +121,21 @@ namespace TMWork.Areas.Admin.Controllers.Role
 
                 //Remove All Users from current Role
                 var users = await _userManager.GetUsersInRoleAsync(role.Name);
-                if (users != null)
+                if (users != null && users.Count>0)
                 {
                     foreach (var u in users)
                     {
                         await _userManager.RemoveFromRoleAsync(u, role.Name);
                     }
                 }
+
+                //await _roleManager.DeleteAsync(role);
                 return Ok();
             }
 
             return BadRequest(ModelState);
         }
+
 
     }
 }

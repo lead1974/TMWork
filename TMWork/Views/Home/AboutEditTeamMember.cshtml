@@ -3,12 +3,111 @@
 @using TMWork.Data.Models.Customer
 @using Microsoft.Extensions.Configuration;
 
+@using Microsoft.AspNetCore.Http.Authentication
+@using TMWork.Data.Models.User
+@using TMWork.Services
+
 @inject IConfiguration configuration;
+@inject SignInManager<AuthUser> SignInManager
+@inject UserManager<AuthUser> UserManager
 
 @{
     ViewData["Title"] = "Edit Team Member";
 }
-<div class="col-lg-12">  
 
-</div>
+@if (User.IsInRole(RoleName.CanManageSite))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            @{
+                                var m = Model;
+                                if (m.MemberId > 0)
+                                { <i>Edit Team Member </i> <strong> @m.MemberId.ToString() - @m.Name.ToString() </strong>}
+                            else
+                            { <i>New Team Member </i>}
+                            }
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <section>
+                            <div class="col-lg-12">
+                                <div class="panel-body">
+                                    <section>
+                                        <form asp-controller="Home" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" asp-antiforgery="true" id="TeamMembersForm" data-role="validator" enctype="multipart/form-data">
+                                            <div asp-validation-summary="All" class="text-danger"></div>
+                                            @Html.HiddenFor(model => model.MemberId)
+                                            <div class="form-group">
+                                                <label asp-for="Name" class="col-md-2 control-label"></label>
+                                                <div class="col-md-10">
+                                                    <b><input asp-for="Name" id="Name" class="form-control"></b>
+                                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <center>
+                                                    @if (m.Image == null)
+                                                    {
+                                                        <img class="img img-thumbnail" style="width:200px; height:200px" src="~/images/nophoto.gif" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="img img-thumbnail" style="width:200px; height:200px" src="@m.GetInlineImageSrc()" />
+                                                    }
+                                                </center>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <label asp-for="Image" class="col-md-2 control-label"></label>
+                                                    <input type="file" asp-for="Image" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Description" class="col-md-2 control-label"></label>
+                                                <div class="col-md-10">
+                                                    <textarea class="form-control" rows="13" placeholder="Message" asp-for="Description" name="Description" id="Description" data-val-required="Description is required" validationMessage="Brief description for Team Member is required">
+                                                </textarea>
+                                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-4">
+                                                    <button type="submit" class="btn btn-lg btn-primary btn-block" name="submit" value="AboutEditTeamMember" formaction='@Url.Action("AboutEditTeamMember", "Home")'><i class="glyphicon  glyphicon-save"></i> Save Team Member</button>
+                                                    @*@if (m.MemberId > 0)
+                                                        {
+                                                            <button type="submit" asp-page-handler="Delete" class="btn btn btn-warning"> Delete</button>
+                                                        }*@
+                                                </div>
+                                                <div class="col-md-offset-2 col-sm-4">
+                                                    <a href="@Url.Action("About", "Home")" class="btn btn-lg btn-default"><i class="glyphicon  glyphicon-log-out" formnovalidate></i> Cancel</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("#Description").kendoEditor({
+                pasteCleanup: {
+                    custom: function (html) {
+                        return html.replace(/<\/?strong[^>]*>/, "");
+                    }
+                }
+            });
+        });
+    </script>
+}
 

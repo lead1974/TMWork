@@ -130,6 +130,7 @@ namespace TMWork.Areas.Admin.Controllers.User
                         user.Email = form.Email;
                         user.EmailConfirmed = form.EmailConfirmed;
                         user.NormalizedEmail = form.Email.ToUpper();
+                        user.SecurityStamp = Guid.NewGuid().ToString();
 
                         await _userManager.CreateAsync(user, form.Password);
 
@@ -258,20 +259,35 @@ namespace TMWork.Areas.Admin.Controllers.User
             return View(userEdit);
         }
 
-        [HttpGet, Route("deleteuser")]
-        public async Task<IActionResult> DeleteUser(string Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(Id);
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "User to delete not found!");
-                }
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null) return BadRequest("User to delete not found!");
+
                 await _userManager.DeleteAsync(user);
+                return Ok();
             }
-            return RedirectToAction("Index", "User");
+
+            return BadRequest(ModelState);
         }
+
+        //[HttpDelete, Route("deleteuser")]
+        //public async Task<IActionResult> DeleteUser(string Id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await _userManager.FindByIdAsync(Id);
+        //        if (user == null)
+        //        {
+        //            ModelState.AddModelError(string.Empty, "User to delete not found!");
+        //        }
+        //        await _userManager.DeleteAsync(user);
+        //    }
+        //    return RedirectToAction("Index", "User");
+        //}
 
         [HttpGet, Route("resetpassword")]
         public async Task<ActionResult> ResetPassword(string Id)

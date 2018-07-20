@@ -2,10 +2,16 @@
 @using TMWork.ViewModels.Home
 @using TMWork.Data.Models.Customer
 @using Microsoft.Extensions.Configuration;
+@using Microsoft.AspNetCore.Http.Authentication
+@using TMWork.Data.Models.User
+@using TMWork.Services
 
 @using TMWork.GoogleReCaptcha.Web.Validation;
 
 @inject IConfiguration configuration;
+@inject SignInManager<AuthUser> SignInManager
+@inject UserManager<AuthUser> UserManager
+
 
 @{
     ViewData["Title"] = "Contact Us";
@@ -220,69 +226,72 @@
     </table>
 </div>
 <hr />
-<div class="col-lg-12">
-    <h1 class="page-header">List of Contacts</h1>
-    <input class="k-textbox" id="searchTxt" /> <i>Minimum 3 charachters required to trigger search function</i>
-    <br />
-    @(Html.Kendo().Grid<TMWork.Data.Models.Customer.Contact>()
-                                                      .Name("contactgrid")
-                                                      .Columns(columns =>
-                                                      {
-                                              //columns.Bound(p => p.FirstName).ClientTemplate("<a href='" + @Url.Action("About", "Home") + "/#=CustomerId#'>View</a>");
-                                              columns.Bound(p => p.ContactId).Title("Id").Visible(false);
-                                                          columns.Bound(p => p.Name).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                          columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                          columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                          columns.Bound(p => p.Message).ClientTemplate("#:getTheSubstring(data.Message,20)#").Title("Message").HtmlAttributes(new { title = "#= Message #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                          columns.Bound(p => p.DateCreated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Created");
-                                                          columns.Bound(p => p.DateUpdated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Updated");
-                                                          columns.Bound(p => p.UpdatedBy).Title("Updated By");
-                                                          columns.Command(command =>
-                                                          {
-                                                              command.Edit();
-                                                              command.Destroy();
-                                                  //command.Custom("Action Name").Click("customAction");
-                                              }).Width(250); //
-                                          })
-                                                      .ToolBar(tools =>
-                                                      {
-                                              //tools.Create();
-                                              tools.Excel();
+@if (User.IsInRole(RoleName.CanManageSite))
+{
+    <div class="col-lg-12">
+        <h1 class="page-header">List of Contacts</h1>
+        <input class="k-textbox" id="searchTxt" /> <i>Minimum 3 charachters required to trigger search function</i>
+        <br />
+        @(Html.Kendo().Grid<TMWork.Data.Models.Customer.Contact>()
+                                                                                  .Name("contactgrid")
+                                                                                  .Columns(columns =>
+                                                                                  {
+                                                                          //columns.Bound(p => p.FirstName).ClientTemplate("<a href='" + @Url.Action("About", "Home") + "/#=CustomerId#'>View</a>");
+                                                                          columns.Bound(p => p.ContactId).Title("Id").Visible(false);
+                                                                                      columns.Bound(p => p.Name).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                                                                      columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                                                                      columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                                                                      columns.Bound(p => p.Message).ClientTemplate("#:getTheSubstring(data.Message,20)#").Title("Message").HtmlAttributes(new { title = "#= Message #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                                                                      columns.Bound(p => p.DateCreated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Created");
+                                                                                      columns.Bound(p => p.DateUpdated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Updated");
+                                                                                      columns.Bound(p => p.UpdatedBy).Title("Updated By");
+                                                                                      columns.Command(command =>
+                                                                                      {
+                                                                                          command.Edit();
+                                                                                          command.Destroy();
+                                                                              //command.Custom("Action Name").Click("customAction");
+                                                                          }).Width(250); //
+                                                                      })
+                                                                                  .ToolBar(tools =>
+                                                                                  {
+                                                                          //tools.Create();
+                                                                          tools.Excel();
 
-                                                      })
-                                                  .Excel(excel => excel
-                                                      .FileName("Contacts.xlsx"))
-                                                  .Editable(editable => editable.Mode(GridEditMode.InLine)) //.TemplateName("Customer"))
-                                                  .Sortable()
-                                                  //.Scrollable()
-                                                  //.Groupable()
-                                                  .Pageable()
-                                                  .Filterable()
-                                                  .DataSource(dataSource =>
-                                                      dataSource
-                                                        .Ajax()
-                                                        .ServerOperation(false)
-                                                        .PageSize(50)
-                                                        .Model(model =>
-                                                        {
-                                                            model.Id(p => p.ContactId);
-                                                            model.Field(p => p.ContactId).Editable(false);
-                                                            model.Field(p => p.Name).Editable(true);
-                                                            model.Field(p => p.Phone).Editable(true);
-                                                            model.Field(p => p.Email).Editable(true);
-                                                            model.Field(p => p.Message).Editable(false);
-                                                            model.Field(p => p.DateCreated).Editable(false);
-                                                            model.Field(p => p.DateUpdated).Editable(false);
-                                                            model.Field(p => p.UpdatedBy).Editable(false);
-                                                        })
-                                                    .Events(events => events.Error("error_handler"))
-                                                    .Create(update => update.Action("ContactEditingPopup_Post", "Home"))
-                                                    .Read(read => read.Action("ContactEditingPopup_Read", "Home"))
-                                                    .Update(update => update.Action("ContactEditingPopup_Update", "Home"))
-                                                    .Destroy(update => update.Action("ContactEditingPopup_Destroy", "Home"))
-                                              )
-    )
-</div>
+                                                                                  })
+                                                                              .Excel(excel => excel
+                                                                                  .FileName("Contacts.xlsx"))
+                                                                              .Editable(editable => editable.Mode(GridEditMode.InLine)) //.TemplateName("Customer"))
+                                                                              .Sortable()
+                                                                              //.Scrollable()
+                                                                              //.Groupable()
+                                                                              .Pageable()
+                                                                              .Filterable()
+                                                                              .DataSource(dataSource =>
+                                                                                  dataSource
+                                                                                    .Ajax()
+                                                                                    .ServerOperation(false)
+                                                                                    .PageSize(50)
+                                                                                    .Model(model =>
+                                                                                    {
+                                                                                        model.Id(p => p.ContactId);
+                                                                                        model.Field(p => p.ContactId).Editable(false);
+                                                                                        model.Field(p => p.Name).Editable(true);
+                                                                                        model.Field(p => p.Phone).Editable(true);
+                                                                                        model.Field(p => p.Email).Editable(true);
+                                                                                        model.Field(p => p.Message).Editable(false);
+                                                                                        model.Field(p => p.DateCreated).Editable(false);
+                                                                                        model.Field(p => p.DateUpdated).Editable(false);
+                                                                                        model.Field(p => p.UpdatedBy).Editable(false);
+                                                                                    })
+                                                                                .Events(events => events.Error("error_handler"))
+                                                                                .Create(update => update.Action("ContactEditingPopup_Post", "Home"))
+                                                                                .Read(read => read.Action("ContactEditingPopup_Read", "Home"))
+                                                                                .Update(update => update.Action("ContactEditingPopup_Update", "Home"))
+                                                                                .Destroy(update => update.Action("ContactEditingPopup_Destroy", "Home"))
+                                                                          )
+        )
+    </div>
+}
 @section scripts
     {
     <script>
