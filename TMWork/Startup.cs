@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TMWork.Data;
-using TMWork.Models;
-using TMWork.Services;
-using TMWork.Data.Models.User;
 using Newtonsoft.Json.Serialization;
-using TMWork.Data.Repos;
-using AutoMapper;
-using TMWork.ViewModels.Home;
+using TMWork.Data;
 using TMWork.Data.Models.Customer;
-using TMWork.ViewModels.Invoice;
 using TMWork.Data.Models.Invoice;
+using TMWork.Data.Models.User;
+using TMWork.Data.Repos;
+using TMWork.Services;
+using TMWork.ViewModels.Home;
+using TMWork.ViewModels.Invoice;
 
 namespace TMWork
 {
@@ -105,6 +100,7 @@ namespace TMWork
             }
             else
             {
+                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
             }
 
