@@ -74,7 +74,9 @@
             Coupons - Only one coupon at a time :)
             @if (SignInManager.IsSignedIn(User) && User.IsInRole(RoleName.CanManageSite))
             {
-                <span class="panel-title pull-right"><a href="@Url.Action("couponIndex", "customercoupon", new { area = "admin" })">Edit</a></span>
+                <span class="panel-title pull-right">
+                     <a href="@Url.Action("couponIndex", "customercoupon", new { area = "" })" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit </a>
+                </span>
             }
         </h3>
         <div class="row col-sm-offset-1 ">

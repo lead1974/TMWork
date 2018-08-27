@@ -6,18 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
-using TMWork.Areas.Admin.ViewModels.Role;
 using TMWork.Data;
 using TMWork.Data.Models.User;
 using TMWork.Services;
+using TMWork.ViewModels.Role;
 
 
-namespace TMWork.Areas.Admin.Controllers.Role
+namespace TMWork.Controllers
 {
-    [Area("Admin")]
-    [Route("admin/[controller]")]
+
     [Authorize(Roles = RoleName.CanManageSite)]
-    public class RoleController : Controller
+    public class RoleController:Controller
     {
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
@@ -57,9 +56,9 @@ namespace TMWork.Areas.Admin.Controllers.Role
         {
             var roles = _TMDbContext.Roles.Select(r => new RoleEdit
             {
-                Id = r.Id,
-                Name = r.Name,
-                Description = r.Description
+                 Id = r.Id,
+                 Name = r.Name,
+                 Description = r.Description
             });
 
             return Json(roles.ToList().ToDataSourceResult(request));
@@ -82,7 +81,7 @@ namespace TMWork.Areas.Admin.Controllers.Role
                     }
                     return Json(new[] { newRole }.ToDataSourceResult(request, ModelState));
                 }
-                else { return BadRequest(); }
+                else { return BadRequest(); }                
             }
             return BadRequest();
         }
@@ -92,7 +91,7 @@ namespace TMWork.Areas.Admin.Controllers.Role
         {
             if (theRole != null && ModelState.IsValid)
             {
-                AuthRole newRole = await _roleManager.FindByIdAsync(theRole.Id);
+                AuthRole newRole = await _roleManager.FindByIdAsync(theRole.Id);                
                 if (newRole == null) return BadRequest();
 
                 newRole.Name = theRole.Name;
@@ -117,7 +116,7 @@ namespace TMWork.Areas.Admin.Controllers.Role
 
                 //Remove All Users from current Role
                 var users = await _userManager.GetUsersInRoleAsync(role.Name);
-                if (users != null && users.Count > 0)
+                if (users != null && users.Count>0)
                 {
                     foreach (var u in users)
                     {

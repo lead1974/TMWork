@@ -67,6 +67,7 @@ namespace TMWork
 
                 });
             services.AddKendo();
+            //services.AddAntiforgery();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             // Add application services.

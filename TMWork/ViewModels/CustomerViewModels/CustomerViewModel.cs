@@ -1,12 +1,5 @@
-﻿using TMWork.Data.Models.Customer;
-using TMWork.Services;
-using TMWork.ViewModels.AccountViewModels;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace TMWork.ViewModels.CustomerViewModels
@@ -17,7 +10,7 @@ namespace TMWork.ViewModels.CustomerViewModels
         {
 
         }
-        public IEnumerable<Customer> Customers { get; set; }
+        public IEnumerable<CustomerForm> Customers { get; set; }
     }
     public class CustomerForm
     {
