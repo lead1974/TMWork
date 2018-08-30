@@ -38,12 +38,12 @@
                                 <div class="panel-body">
                                     <section>
                                         <form asp-controller="Home" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" asp-antiforgery="true" id="TeamMembersForm" data-role="validator" enctype="multipart/form-data">
-                                            <div asp-validation-summary="All" class="text-danger"></div>
+                                            @*<div asp-validation-summary="All" class="text-danger"></div>*@
                                             @Html.HiddenFor(model => model.MemberId)
                                             <div class="form-group">
                                                 <label asp-for="Name" class="col-md-2 control-label"></label>
                                                 <div class="col-md-10">
-                                                    <b><input asp-for="Name" id="Name" class="form-control"></b>
+                                                    <input asp-for="Name" id="Name" class="form-control">
                                                     <span asp-validation-for="Name" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -97,6 +97,9 @@
     </div>
 }
 @section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
     <script>
         $(document).ready(function () {
 

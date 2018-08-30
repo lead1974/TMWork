@@ -26,51 +26,51 @@
         <input class="k-textbox" id="searchTxt" /> <i>Minimum 3 charachters required to trigger search function</i>
         <br />
         @(Html.Kendo().Grid<TMWork.ViewModels.Invoice.InvoiceViewModel>()
-                                                          .Name("grid")
-                                                          .Columns(columns =>
-                                                          {
-                                                              columns.Bound(p => p.InvoiceId).ClientTemplate(
-                                                                  "<a href='" + @Url.Action("CreateEditInvoice", "Invoice", new { area = "" }) + "/?invoiceId=#=InvoiceId#' class='btn bth-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit</a> " +
-                                                                  "<button class='btn bth-xs btn-danger js-delete' data-invoice-id=#=InvoiceId# data-invoice-name=#=InvoiceName#><i class='glyphicon glyphicon-trash'></i> Delete</button>"
-                                                                  ).Title("Actions").Filterable(false);
-                                                              columns.Bound(p => p.InvoiceName).Title("Invoice Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                              columns.Bound(p => p.InvoiceDate).Format("{0:d}").ToString();
-                                                              columns.Bound(p => p.CustomerName).Visible(true).Title("Customer Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains")))); //.ClientTemplate("#=FirstName# #=LastName#").Title("Customer Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                                                                                                                                                                                                                  //columns.Bound(p => p.FirstName).Filterable(filter => filter.Operators(o => o.ForString(f => f.Contains("Contains"))));
-                                                                                                                                                                                                                                                  //columns.Bound(p => p.LastName).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Contains("Contains"))));
-                                                  columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                              columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains")))).ToString();
-                                                              columns.Bound(p => p.WorkNotes).ClientTemplate("#:getTheSubstring(data.WorkNotes,20)#").Title("Work Notes").HtmlAttributes(new { title = "#= WorkNotes #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                          })
-                                                          .ToolBar(tools =>
-                                                          {
-                                                              tools.Excel();
-                                                          })
-                                                          .Excel(excel => excel
-                                                                  .FileName("Invoices.xlsx"))
-                                                          .Sortable()
-                                                          .Scrollable()
-                                                          .Pageable()
-                                                          .Filterable()
-                                                          .HtmlAttributes(new { style = "height:550px;" })
-                                                          .DataSource(dataSource =>
-                                                              dataSource
-                                                                .Ajax()
-                                                                .PageSize(20)
-                                                                .Model(model =>
-                                                                {
-                                                                    model.Id(p => p.InvoiceId);
-                                                                    model.Field("InvoiceName", typeof(string));
-                                                                    model.Field("InvoiceDate", typeof(DateTime));
-                                                                    model.Field("CustomerName", typeof(string));
-                                                        //model.Field("LastName", typeof(string));
-                                                        model.Field("Email", typeof(string));
-                                                                    model.Field("Phone", typeof(string));
-                                                                    model.Field("WorkNotes", typeof(string));
-                                                                })
-                                                                .Events(events => events.Error("error_handler"))
-                                                                .Read(read => read.Action("Invoice_Read", "Invoice"))
-                                                          )
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.InvoiceId).ClientTemplate(
+                        "<a href='" + @Url.Action("CreateEditInvoice", "Invoice", new { area = "" }) + "/?invoiceId=#=InvoiceId#' class='btn bth-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit</a> " +
+                        "<button class='btn bth-xs btn-danger js-delete' data-invoice-id=#=InvoiceId# data-invoice-name=#=InvoiceName#><i class='glyphicon glyphicon-trash'></i> Delete</button>"
+                        ).Title("Actions").Filterable(false);
+                    columns.Bound(p => p.InvoiceName).Title("Invoice Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                    columns.Bound(p => p.InvoiceDate).Format("{0:d}").ToString();
+                    columns.Bound(p => p.CustomerName).Visible(true).Title("Customer Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains")))); //.ClientTemplate("#=FirstName# #=LastName#").Title("Customer Name").Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                                                                                                                                                                                        //columns.Bound(p => p.FirstName).Filterable(filter => filter.Operators(o => o.ForString(f => f.Contains("Contains"))));
+                                                                                                                                                                                                        //columns.Bound(p => p.LastName).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Contains("Contains"))));
+                    columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                    columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains")))).ToString();
+                    columns.Bound(p => p.WorkNotes).ClientTemplate("#:getTheSubstring(data.WorkNotes,20)#").Title("Work Notes").HtmlAttributes(new { title = "#= WorkNotes #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                })
+                .ToolBar(tools =>
+                {
+                    tools.Excel();
+                })
+                .Excel(excel => excel
+                        .FileName("Invoices.xlsx"))
+                .Sortable()
+                .Scrollable()
+                .Pageable()
+                .Filterable()
+                .HtmlAttributes(new { style = "height:550px;" })
+                .DataSource(dataSource =>
+                    dataSource
+                    .Ajax()
+                    .PageSize(20)
+                    .Model(model =>
+                    {
+                        model.Id(p => p.InvoiceId);
+                        model.Field("InvoiceName", typeof(string));
+                        model.Field("InvoiceDate", typeof(DateTime));
+                        model.Field("CustomerName", typeof(string));
+                        //model.Field("LastName", typeof(string));
+                        model.Field("Email", typeof(string));
+                        model.Field("Phone", typeof(string));
+                        model.Field("WorkNotes", typeof(string));
+                    })
+                    .Events(events => events.Error("error_handler"))
+                    .Read(read => read.Action("Invoice_Read", "Invoice"))
+                )
         )
     </div>
 }

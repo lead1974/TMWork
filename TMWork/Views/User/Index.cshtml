@@ -26,7 +26,7 @@
       {
           columns.Bound(p => p.Id).ClientTemplate(
               "<a href='" + @Url.Action("EditUser", "User", new { area = "" }) + "/?Id=#=Id#' class='btn bth-xs btn-primary'><i class='glyphicon glyphicon-edit'></i> Edit</a> " +
-              "<a href='" + @Url.Action("ResetPassword", "User", new { area = "" }) + "/?Id=#=Id#' class='btn bth-xs btn-default'><i class='glyphicon glyphicon-lock'></i> Password Reset</a> " +
+              "<a href='" + @Url.Action("ResetPassword", "User", new { area = "" }) + "/?Id=#=Id#' class='btn bth-xs btn-default'><i class='glyphicon glyphicon-lock'></i> Reset</a> " +
               "<button class='btn bth-xs btn-danger js-delete' data-user-id=#=Id# data-user-email=#=Email#><i class='glyphicon glyphicon-trash'></i> Delete</button>"
               ).Title("Actions");
           columns.Bound(p => p.Email);

@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-
-using TMWork.Models;
-using TMWork.Data.Models.User;
-using TMWork.Services;
-
-using TMWork.Data;
-using TMWork.Data.Repos;
-
-using Kendo.Mvc.UI;
-using Kendo.Mvc.Extensions;
-using TMWork.ViewModels.Home;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using TMWork.Data.Models.Customer;
-using AutoMapper;
-using TMWork.Data.Models.Team;
 using System.Web;
-using Microsoft.AspNetCore.Http;
+using TMWork.Data;
+using TMWork.Data.Models.Customer;
+using TMWork.Data.Models.Team;
+using TMWork.Data.Models.User;
+using TMWork.Data.Repos;
+using TMWork.Models;
+using TMWork.Services;
+using TMWork.ViewModels.Home;
 
 namespace TMWork.Controllers
 {
@@ -75,6 +71,7 @@ namespace TMWork.Controllers
             _logger = loggerFactory.CreateLogger<HomeController>();
             _config = config;
             _env = env;
+            
         }
         [SelectedTabFilter("home")]
         public IActionResult Index()
@@ -168,7 +165,7 @@ namespace TMWork.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View("AboutEditTeamMember", model);
             }
 
             if (Image != null)

@@ -16,42 +16,48 @@
 @{
     ViewData["Title"] = "Contact Us";
 }
-<h2>Contact Us</h2>
-<form asp-controller="Home" asp-action="Contact" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" asp-antiforgery="true" id="ContactForm" data-role="validator">
 
-    <div class="row">
-        @if (ViewBag.UserMessage != null)
-        {
-            <div class="alert-success">@ViewBag.UserMessage</div>
-        }
-        <div class="col-md-5">
-            <h4><strong>Get in Touch</strong></h4>
-            <div asp-validation-summary="All" class="alert-danger"></div>
+<div class="row">
+    <div class="col-md-10">
+        <div class="col-md-4">
+            <section>
+                <form asp-controller="Home" asp-action="Contact" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" asp-antiforgery="true" id="ContactForm" data-role="validator">
 
-            <div class="form-group">
-                <input asp-for="Name" type="text" class="form-control" placeholder="Name" />
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="E-mail" asp-for="Email" />
-            </div>
-            <div class="form-group">
-                <input type="tel" class="form-control" placeholder="Phone" asp-for="Phone" />
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" rows="13" placeholder="Message" asp-for="Message"></textarea>
-            </div>
-            <div class="form-group">
-                @Html.GoogleReCaptcha(configuration.GetValue<String>("GoogleReCaptcha:ClientKey"))
-            </div>
-            <button class="btn btn-default" type="submit" name="button">
-                <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Submit
-            </button>
+                    @if (ViewBag.UserMessage != null)
+                        {
+                            <div class="alert-success">@ViewBag.UserMessage</div>
+                        }
+
+                    <h4><strong>Get in Touch</strong></h4>
+                    <div asp-validation-summary="All" class="alert-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="E-mail" asp-for="Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="Phone" asp-for="Phone" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="13" placeholder="Message" asp-for="Message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        @Html.GoogleReCaptcha(configuration.GetValue<String>("GoogleReCaptcha:ClientKey"))
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg" type="submit" name="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Submit </button>
+                    </div>
+                </form>
+
+            </section>
         </div>
         <div class="col-md-7">
             <iframe src=@configuration.GetSection("SiteSettings")["GoogleMapCoordinates"] width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
     </div>
-</form>
+</div>
 <br />
 <div id="example" style="display:none;">
     <table id="grid">
@@ -233,67 +239,69 @@
         <input class="k-textbox" id="searchTxt" /> <i>Minimum 3 charachters required to trigger search function</i>
         <br />
         @(Html.Kendo().Grid<TMWork.Data.Models.Customer.Contact>()
-                                                                                  .Name("contactgrid")
-                                                                                  .Columns(columns =>
-                                                                                  {
-                                                                          //columns.Bound(p => p.FirstName).ClientTemplate("<a href='" + @Url.Action("About", "Home") + "/#=CustomerId#'>View</a>");
-                                                                          columns.Bound(p => p.ContactId).Title("Id").Visible(false);
-                                                                                      columns.Bound(p => p.Name).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                                                      columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                                                      columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                                                      columns.Bound(p => p.Message).ClientTemplate("#:getTheSubstring(data.Message,20)#").Title("Message").HtmlAttributes(new { title = "#= Message #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
-                                                                                      columns.Bound(p => p.DateCreated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Created");
-                                                                                      columns.Bound(p => p.DateUpdated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Updated");
-                                                                                      columns.Bound(p => p.UpdatedBy).Title("Updated By");
-                                                                                      columns.Command(command =>
-                                                                                      {
-                                                                                          command.Edit();
-                                                                                          command.Destroy();
-                                                                              //command.Custom("Action Name").Click("customAction");
-                                                                          }).Width(250); //
-                                                                      })
-                                                                                  .ToolBar(tools =>
-                                                                                  {
-                                                                          //tools.Create();
-                                                                          tools.Excel();
+                                        .Name("contactgrid")
+                                        .Columns(columns =>
+                                        {
+                                    //columns.Bound(p => p.FirstName).ClientTemplate("<a href='" + @Url.Action("About", "Home") + "/#=CustomerId#'>View</a>");
+                                    columns.Bound(p => p.ContactId).Title("Id").Visible(false);
+                                            columns.Bound(p => p.Name).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                            columns.Bound(p => p.Phone).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                            columns.Bound(p => p.Email).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                            columns.Bound(p => p.Message).ClientTemplate("#:getTheSubstring(data.Message,20)#").Title("Message").HtmlAttributes(new { title = "#= Message #" }).Filterable(filter => filter.Extra(false).Operators(o => o.ForString(f => f.Clear().Contains("Contains"))));
+                                            columns.Bound(p => p.DateCreated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Created");
+                                            columns.Bound(p => p.DateUpdated).Format("{0:M/d/yyyy HH:mm:ss}").EditorTemplateName("DateTime").Title("Date Updated");
+                                            columns.Bound(p => p.UpdatedBy).Title("Updated By");
+                                            columns.Command(command =>
+                                {
+                                    command.Edit();
+                                    command.Destroy();
+                            //command.Custom("Action Name").Click("customAction");
+                        }).Width(250); //
+                                })
+                                        .ToolBar(tools =>
+                                        {
+                                    //tools.Create();
+                                    tools.Excel();
 
-                                                                                  })
-                                                                              .Excel(excel => excel
-                                                                                  .FileName("Contacts.xlsx"))
-                                                                              .Editable(editable => editable.Mode(GridEditMode.InLine)) //.TemplateName("Customer"))
-                                                                              .Sortable()
-                                                                              //.Scrollable()
-                                                                              //.Groupable()
-                                                                              .Pageable()
-                                                                              .Filterable()
-                                                                              .DataSource(dataSource =>
-                                                                                  dataSource
-                                                                                    .Ajax()
-                                                                                    .ServerOperation(false)
-                                                                                    .PageSize(50)
-                                                                                    .Model(model =>
-                                                                                    {
-                                                                                        model.Id(p => p.ContactId);
-                                                                                        model.Field(p => p.ContactId).Editable(false);
-                                                                                        model.Field(p => p.Name).Editable(true);
-                                                                                        model.Field(p => p.Phone).Editable(true);
-                                                                                        model.Field(p => p.Email).Editable(true);
-                                                                                        model.Field(p => p.Message).Editable(false);
-                                                                                        model.Field(p => p.DateCreated).Editable(false);
-                                                                                        model.Field(p => p.DateUpdated).Editable(false);
-                                                                                        model.Field(p => p.UpdatedBy).Editable(false);
-                                                                                    })
-                                                                                .Events(events => events.Error("error_handler"))
-                                                                                .Create(update => update.Action("ContactEditingPopup_Post", "Home"))
-                                                                                .Read(read => read.Action("ContactEditingPopup_Read", "Home"))
-                                                                                .Update(update => update.Action("ContactEditingPopup_Update", "Home"))
-                                                                                .Destroy(update => update.Action("ContactEditingPopup_Destroy", "Home"))
-                                                                          )
+                                        })
+                                    .Excel(excel => excel
+                                        .FileName("Contacts.xlsx"))
+                                    .Editable(editable => editable.Mode(GridEditMode.InLine)) //.TemplateName("Customer"))
+                                    .Sortable()
+                                    //.Scrollable()
+                                    //.Groupable()
+                                    .Pageable()
+                                    .Filterable()
+                                    .DataSource(dataSource =>
+                                        dataSource
+                                        .Ajax()
+                                        .ServerOperation(false)
+                                        .PageSize(50)
+                                        .Model(model =>
+                                        {
+                                            model.Id(p => p.ContactId);
+                                            model.Field(p => p.ContactId).Editable(false);
+                                            model.Field(p => p.Name).Editable(true);
+                                            model.Field(p => p.Phone).Editable(true);
+                                            model.Field(p => p.Email).Editable(true);
+                                            model.Field(p => p.Message).Editable(false);
+                                            model.Field(p => p.DateCreated).Editable(false);
+                                            model.Field(p => p.DateUpdated).Editable(false);
+                                            model.Field(p => p.UpdatedBy).Editable(false);
+                                        })
+                                    .Events(events => events.Error("error_handler"))
+                                    .Create(update => update.Action("ContactEditingPopup_Post", "Home"))
+                                    .Read(read => read.Action("ContactEditingPopup_Read", "Home"))
+                                    .Update(update => update.Action("ContactEditingPopup_Update", "Home"))
+                                    .Destroy(update => update.Action("ContactEditingPopup_Destroy", "Home"))
+                                )
         )
     </div>
 }
 @section scripts
     {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script>
         function error_handler(e) {
             //var errors = $.parseJSON(e.xhr.responseText);

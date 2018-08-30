@@ -18,12 +18,13 @@
             <li data-target="#myCarousel" data-slide-to="3"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
+
             <div class="item active">
                 <img src="~/images/carousel-appliance_1.jpg" alt="carousel-appliance_1" class="img-responsive" />
                 <div class="carousel-caption" role="option">
                     <p>
                         Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
-                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                        @*<a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>*@
                     </p>
                 </div>
             </div>
@@ -32,7 +33,7 @@
                 <div class="carousel-caption" role="option">
                     <p>
                         Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
-                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                        @*<a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>*@
                     </p>
                 </div>
             </div>
@@ -41,7 +42,7 @@
                 <div class="carousel-caption" role="option">
                     <p>
                         Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
-                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                        @*<a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger btn-lg"> Contact Us</a>*@
                     </p>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                 <div class="carousel-caption" role="option">
                     <p>
                         Setup an Appointment. When you call ATapplianceServiceInc, you're on your way to receiving the highest quality service in the area<br />
-                        <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>
+                        @*<a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-danger"> Contact Us</a>*@
                     </p>
                 </div>
             </div>
@@ -64,7 +65,13 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+
 </div>
+<br />
+<center>
+    <a href="@Url.Action("contact","home", new { area = "" })" class="btn btn-primary btn-lg" style="font-size:2em"> Contact Us</a>
+</center>
+
 <hr />
 
 @if (ViewBag.ShowCoupons == "yes")
@@ -75,7 +82,7 @@
             @if (SignInManager.IsSignedIn(User) && User.IsInRole(RoleName.CanManageSite))
             {
                 <span class="panel-title pull-right">
-                     <a href="@Url.Action("couponIndex", "customercoupon", new { area = "" })" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit </a>
+                    <a href="@Url.Action("couponIndex", "customercoupon", new { area = "" })" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit </a>
                 </span>
             }
         </h3>
@@ -104,16 +111,16 @@
 
     <div class="demo-section k-content wide">
         @(Html.Kendo().ListView<TMWork.Data.Models.Customer.CustomerCoupon>()
-                                .Name("couponListView")
-                                .TagName("div")
-                                .ClientTemplateId("couponListViewTemplate")
-                                .DataSource(dataSource => dataSource
-                                   .Ajax().
-                                   Read(read => read.Action("GetCustomerCoupons", "Home")
-                                )
-                                .ServerOperation(true)
-                                .PageSize(20)
-                               )
+                                                .Name("couponListView")
+                                                .TagName("div")
+                                                .ClientTemplateId("couponListViewTemplate")
+                                                .DataSource(dataSource => dataSource
+                                                   .Ajax().
+                                                   Read(read => read.Action("GetCustomerCoupons", "Home")
+                                                )
+                                                .ServerOperation(true)
+                                                .PageSize(20)
+                                               )
         )
     </div>
 }

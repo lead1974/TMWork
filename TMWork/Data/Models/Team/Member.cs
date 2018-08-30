@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TMWork.Data.Models.Team
 {
@@ -14,7 +10,7 @@ namespace TMWork.Data.Models.Team
         public int MemberId { get; set; }
 
         [Display(Name = "Name")]
-        [Required]
+        [Required(ErrorMessage = "Team Member Name is required")]
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
